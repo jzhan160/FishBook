@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.se.fishbook.mapper.PostMapper" >
+  <resultMap id="BaseResultMap" type="com.se.fishbook.model.Post" >
+    <id column="PostId" property="postid" jdbcType="INTEGER" />
+    <result column="Content" property="content" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="ImagePath" property="imagepath" jdbcType="VARCHAR" />
+    <result column="AuthorId" property="authorid" jdbcType="INTEGER" />
+    <result column="LocationLatitude" property="locationlatitude" jdbcType="DOUBLE" />
+    <result column="LocationLongitude" property="locationlongitude" jdbcType="DOUBLE" />
+    <result column="LikeCount" property="likecount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PostId, Content, CreateTime, ImagePath, AuthorId, LocationLatitude, LocationLongitude, 
+    LikeCount
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.se.fishbook.model.PostExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from post
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from post
+    where PostId = #{postid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from post
+    where PostId = #{postid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.se.fishbook.model.PostExample" >
+    delete from post
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.se.fishbook.model.Post" >
+    insert into post (PostId, Content, CreateTime, 
+      ImagePath, AuthorId, LocationLatitude, 
+      LocationLongitude, LikeCount)
+    values (#{postid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{imagepath,jdbcType=VARCHAR}, #{authorid,jdbcType=INTEGER}, #{locationlatitude,jdbcType=DOUBLE}, 
+      #{locationlongitude,jdbcType=DOUBLE}, #{likecount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.se.fishbook.model.Post" >
+    insert into post
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="postid != null" >
+        PostId,
+      </if>
+      <if test="content != null" >
+        Content,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="imagepath != null" >
+        ImagePath,
+      </if>
+      <if test="authorid != null" >
+        AuthorId,
+      </if>
+      <if test="locationlatitude != null" >
+        LocationLatitude,
+      </if>
+      <if test="locationlongitude != null" >
+        LocationLongitude,
+      </if>
+      <if test="likecount != null" >
+        LikeCount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="postid != null" >
+        #{postid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imagepath != null" >
+        #{imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="authorid != null" >
+        #{authorid,jdbcType=INTEGER},
+      </if>
+      <if test="locationlatitude != null" >
+        #{locationlatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="locationlongitude != null" >
+        #{locationlongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="likecount != null" >
+        #{likecount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.se.fishbook.model.PostExample" resultType="java.lang.Integer" >
+    select count(*) from post
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update post
+    <set >
+      <if test="record.postid != null" >
+        PostId = #{record.postid,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        Content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.imagepath != null" >
+        ImagePath = #{record.imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorid != null" >
+        AuthorId = #{record.authorid,jdbcType=INTEGER},
+      </if>
+      <if test="record.locationlatitude != null" >
+        LocationLatitude = #{record.locationlatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.locationlongitude != null" >
+        LocationLongitude = #{record.locationlongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.likecount != null" >
+        LikeCount = #{record.likecount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update post
+    set PostId = #{record.postid,jdbcType=INTEGER},
+      Content = #{record.content,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      ImagePath = #{record.imagepath,jdbcType=VARCHAR},
+      AuthorId = #{record.authorid,jdbcType=INTEGER},
+      LocationLatitude = #{record.locationlatitude,jdbcType=DOUBLE},
+      LocationLongitude = #{record.locationlongitude,jdbcType=DOUBLE},
+      LikeCount = #{record.likecount,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.se.fishbook.model.Post" >
+    update post
+    <set >
+      <if test="content != null" >
+        Content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imagepath != null" >
+        ImagePath = #{imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="authorid != null" >
+        AuthorId = #{authorid,jdbcType=INTEGER},
+      </if>
+      <if test="locationlatitude != null" >
+        LocationLatitude = #{locationlatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="locationlongitude != null" >
+        LocationLongitude = #{locationlongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="likecount != null" >
+        LikeCount = #{likecount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where PostId = #{postid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.se.fishbook.model.Post" >
+    update post
+    set Content = #{content,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      ImagePath = #{imagepath,jdbcType=VARCHAR},
+      AuthorId = #{authorid,jdbcType=INTEGER},
+      LocationLatitude = #{locationlatitude,jdbcType=DOUBLE},
+      LocationLongitude = #{locationlongitude,jdbcType=DOUBLE},
+      LikeCount = #{likecount,jdbcType=INTEGER}
+    where PostId = #{postid,jdbcType=INTEGER}
+  </update>
+</mapper>

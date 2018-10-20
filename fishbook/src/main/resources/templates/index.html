@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FishBook</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+<!--
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+-->
+    <style type="text/css">
+        body {
+            background-color: #f5f5f5;
+        }
+
+        #contents {
+            background-color: #FFF;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <a class="navbar-brand pull-right" th:href="@{index}">FishBook</a>
+                    <div id="menu" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-left" >
+                            <li class="nav-item"><a href="index" class="glyphicon glyphicon-home">Home</a></li>
+                            <li class="nav-item">
+                                <a href="#" class="dropdown-toggle glyphicon glyphicon-inbox"
+                                   data-toggle="dropdown">Map<strong class="caret"></strong>
+                                </a>
+                            <li class="nav-item"> <a data-toggle="modal" data-target="#loginModal" href="">
+                                <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                            <li class="nav-item" ><a th:href="@{user/register}"><span
+                                    class="glyphicon glyphicon-user"></span> Sign Up </a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </nav>
+        </div>
+
+        <br> <br> <br> <br> <br> <br>
+    </div>
+</div>
+<!--   登录弹窗 -->
+<div id="loginModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h1 class="text-center text-primary">欢迎登录</h1>
+            </div>
+            <div class="modal-body">
+                <form id="login1" action="user/login" method="post"
+                      class="form col-md-12 center-block">
+                    <div class="form-group">
+                        <input id="username" name="username" type="text"
+                               class="form-control input-lg" placeholder="用户名">
+                    </div>
+                    <div class="form-group">
+                        <input id="password" name="password" type="password"
+                               class="form-control input-lg" placeholder="登录密码">
+                    </div>
+                    <div class="form-group">
+                        <div id="loginInfo"></div>
+                    </div>
+                    <div class="form-group">
+                        <button id="submit1" class="btn btn-primary btn-lg btn-block"
+                                type="button" onclick="validatePassword()">立刻登录
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function validatePassword() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        /* 判断用户名密码是否为空 */
+        if (username == "") {
+            $("#loginInfo").html(
+                "<b style='color:red;font-size:15px;'>用户名不能为空！</b>");
+            $("#username").focus();
+            return;
+        }
+        if (password == "") {
+            $("#loginInfo").html(
+                "<b style='color:red;font-size:15px;'>密码不能为空！</b>");
+            $("#password").focus();
+            return;
+        }
+        /* ajax验证密码 */
+        $
+            .ajax({
+                type: "GET",
+                url: "validatePassword",
+                data: {
+                    "username": username
+                },
+                async: true,
+                success: function (data) {
+                    /* alert(password==data); */
+                    if (password == data) {
+                        $("#login1").submit();
+                    } else {
+                        $("#loginInfo")
+                            .html(
+                                "<b style='color:red;font-size:15px;'>用户名或密码错误！</b>");
+                    }
+                    /* alert(data); */
+                }
+            })
+    }
+
+    /* Enter提交 */
+    $(document).ready(
+        function () {
+            $("body").keydown(
+                function (e) {
+                    var curKey = e.which;
+                    if (curKey == 13) {
+                        /* 这里一定不能为“sunbmit”详情见官方api文档 */
+                        $("#submit1").click();
+                        return false;
+                    }
+                });
+        });
+
+    /* 天气预报 */
+    $
+        .getScript(
+            'http://php.weather.sina.com.cn/iframe/index/w_cl.php?code=js&day=0&city=&dfc=1&charset=utf-8',
+            function (a) {
+                var s = "", r = "", q = "";
+                for (s in window.SWther.w) {
+                    q = SWther.w[s][0];
+                    r = {
+                        city: s,
+                        date: SWther.add.now.split(" ")[0] || "",
+                        day_weather: q.s1,
+                        night_weather: q.s2,
+                        day_temp: q.t1,
+                        night_temp: q.t2,
+                        day_wind: q.p1,
+                        night_wind: q.p2
+                    }, $("#w").html(
+                        "[" + r.city + "]" + " " + q.s1 + " "
+                        + q.t1 + "℃");
+                }
+            });
+</script>
+</body>
+</html>
