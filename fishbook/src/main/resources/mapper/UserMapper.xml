@@ -91,7 +91,7 @@
     <include refid="Base_Column_List" />
     from user
     where UserId = #{userid,jdbcType=INTEGER}
-      and Email = #{email,jdbcType=VARCHAR}
+      or Email = #{email,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.se.fishbook.model.UserKey" >
     delete from user

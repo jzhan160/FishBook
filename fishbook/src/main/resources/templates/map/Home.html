@@ -1,5 +1,10 @@
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <!-- Bootstrap -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
     <script
             src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBrwKXsz9MEXb7-4gi7JKT_moyf_b6damk&sensor=false">
     </script>
@@ -20,7 +25,10 @@
 </head>
 
 <body>
-<div id="googleMap" style="width:500px;height:380px;"></div>
-
+<div class="manual-reader manual-container">
+    <div th:replace="/widgets/header :: header"></div>
+    <div id="googleMap" style="width:500px;height:380px;"></div>
+    <div th:text="${session.user.username}">username</div>
+</div>
 </body>
 </html>

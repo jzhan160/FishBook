@@ -13,7 +13,7 @@ public class MapController {
     //direct to the map page
     @RequestMapping("")
     public String map(){
-        return "";
+        return "map/Home";
     }
 
     //click one spot on the map

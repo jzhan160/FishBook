@@ -24,7 +24,7 @@ public class AccountController {
     //direct to the profile page
     @RequestMapping("/profile")
     public String profile(){
-        return "";
+        return "account/profile";
     }
 
     //direct to the page where you can edit the password
@@ -56,8 +56,8 @@ public class AccountController {
         return "";
     }
 
-    //look through all your previous posts
-    @RequestMapping("/previous_posts")
+    //
+    @RequestMapping("/setting")
     public String previousPosts(){
         return "";
     }

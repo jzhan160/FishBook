@@ -62,4 +62,17 @@ public class User extends UserKey {
     public void setIsadmin(Integer isadmin) {
         this.isadmin = isadmin;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +"id='"+super.getUserid() +'\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='"+super.getEmail()+ '\'' +
+                ", gender='" + gender + '\'' +
+                ", createtime=" + createtime +
+                ", imagepath='" + imagepath + '\'' +
+                ", isadmin=" + isadmin +
+                '}';
+    }
 }
