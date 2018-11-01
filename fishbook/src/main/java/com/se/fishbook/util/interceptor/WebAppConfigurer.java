@@ -3,12 +3,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-/**
- * 拦截配置--调用链
- * 创建者 小柒2012
- * 创建时间	2017年9月22日
- *
- */
+
+/*
 @Configuration
 public class WebAppConfigurer extends WebMvcConfigurerAdapter {
 
@@ -20,4 +16,4 @@ public class WebAppConfigurer extends WebMvcConfigurerAdapter {
 		super.addInterceptors(registry);
 	}
 
-}
+}*/

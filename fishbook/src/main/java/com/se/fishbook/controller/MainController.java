@@ -32,14 +32,18 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping("/home")
-    public String home(HttpServletRequest request) {
-        //System.out.println("user in session:"+request.getSession().getAttribute(Constants.CURRENT_USER));
-        return "home";
+    @RequestMapping("home")
+    public @ResponseBody Result  home() {
+        System.out.println("home");
+        Result result = new Result();
+        result.setCode(Constants.SUCCESS);
+        return result;
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public @ResponseBody Result login(User user, HttpServletRequest request) {
+
+
+    @RequestMapping(value = "login",method = RequestMethod.POST)
+    public String login(User user, HttpServletRequest request) {
         System.out.println("==================in the login method");
         System.out.println("==================user is"+user);
         UserKey key = new UserKey();
@@ -52,7 +56,7 @@ public class MainController {
             if(user_checked.getPassword().equals(user.getPassword())){
                 request.getSession().setAttribute(Constants.CURRENT_USER, user_checked);
                 //System.out.println("user is "+user);
-               // System.out.println("user_checked is "+user_checked);
+                // System.out.println("user_checked is "+user_checked);
 
                 result.setCode(Constants.SUCCESS);
             }else{
@@ -63,9 +67,9 @@ public class MainController {
             result.setCode(Constants.ERROR);
             result.setMsg("Account does not exist!");
         }
-       // System.out.println(result.getCode());
-       // System.out.println(result.getMsg());
-        return result;
+        // System.out.println(result.getCode());
+        // System.out.println(result.getMsg());
+        return "index";
     }
 
 
