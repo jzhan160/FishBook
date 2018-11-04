@@ -1,10 +1,16 @@
 package com.se.fishbook.controller;
+import com.se.fishbook.model.Post;
+import com.se.fishbook.model.User;
 import com.se.fishbook.service.NotificationService;
 import com.se.fishbook.service.PostService;
 import com.se.fishbook.service.UserService;
+import com.se.fishbook.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /*
 * AccountController class handles requests about user accounts
@@ -56,11 +62,18 @@ public class AccountController {
         return "";
     }
 
-    //
-    @RequestMapping("/setting")
-    public String previousPosts(){
-        return "";
+    //return the personal page
+    @RequestMapping("/personal_post")
+    public String personalPage(HttpServletRequest request){
+        System.out.println("in index page");
+        System.out.println("user in session:"+request.getSession().getAttribute(Constants.CURRENT_USER));
+        User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
+        if (user!=null){
+            System.out.println("==================Loading the post...===============");
+            List<Post> posts = postService.postByUserId(user.getUserid());
+            System.out.println("==================Total Num:"+ posts.size() +"===============");
+            //TODO: model and view???
+        }
+        return "account";
     }
-
-
 }

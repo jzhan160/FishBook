@@ -6,6 +6,7 @@
     <result column="FollowerId" property="followerid" jdbcType="INTEGER" />
     <result column="FolloweeId" property="followeeid" jdbcType="INTEGER" />
   </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -67,6 +68,7 @@
   <sql id="Base_Column_List" >
     RelationshipId, FollowerId, FolloweeId
   </sql>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.se.fishbook.model.UserRelationshipExample" >
     select
     <if test="distinct" >
@@ -81,12 +83,29 @@
       order by ${orderByClause}
     </if>
   </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from userrelationship
     where RelationshipId = #{relationshipid,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByFollowerId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from userrelationship
+    where FollowerId = #{relationshipid,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByFolloweeId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from userrelationship
+    where FolloweeId = #{relationshipid,jdbcType=INTEGER}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from userrelationship
     where RelationshipId = #{relationshipid,jdbcType=INTEGER}

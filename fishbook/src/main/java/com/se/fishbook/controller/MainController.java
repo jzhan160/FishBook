@@ -1,7 +1,10 @@
 package com.se.fishbook.controller;
 
+import com.se.fishbook.model.Post;
 import com.se.fishbook.model.User;
 import com.se.fishbook.model.UserKey;
+import com.se.fishbook.service.PostService;
+import com.se.fishbook.service.RelationService;
 import com.se.fishbook.service.UserService;
 import com.se.fishbook.util.Constants;
 import com.se.fishbook.util.Result;
@@ -10,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * MainController class deals with login and registration activities
@@ -21,13 +27,23 @@ public class MainController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RelationService relationService;
+
+    @Autowired
+    private PostService postService;
+
+    //Personal main page
     @RequestMapping("/index")
     public String index(HttpServletRequest request) {
         System.out.println("in index page");
         System.out.println("user in session:"+request.getSession().getAttribute(Constants.CURRENT_USER));
         User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
-        if (user!=null){ //get posts
-
+        if (user!=null){
+            System.out.println("==================Loading the post...===============");
+            List<Post> posts = postService.postsByUserIds(relationService.allFollowees(user));
+            System.out.println("==================Total Num:"+ posts.size() +"===============");
+            //TODO: model and view???
         }
         return "index";
     }

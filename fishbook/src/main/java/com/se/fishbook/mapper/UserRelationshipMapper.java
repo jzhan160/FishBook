@@ -18,6 +18,10 @@ public interface UserRelationshipMapper {
 
     List<UserRelationship> selectByExample(UserRelationshipExample example);
 
+    List<UserRelationship> selectByFollowerId(Integer followerId);
+
+    List<UserRelationship> selectByFolloweeId(Integer followeeId);
+
     UserRelationship selectByPrimaryKey(Integer relationshipid);
 
     int updateByExampleSelective(@Param("record") UserRelationship record, @Param("example") UserRelationshipExample example);
@@ -27,4 +31,6 @@ public interface UserRelationshipMapper {
     int updateByPrimaryKeySelective(UserRelationship record);
 
     int updateByPrimaryKey(UserRelationship record);
+
+
 }
