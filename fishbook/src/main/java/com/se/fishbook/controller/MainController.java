@@ -99,30 +99,7 @@ public class MainController {
         request.getSession().setAttribute(Constants.CURRENT_USER, null);
         return "/index";
     }
-    /*get all followers */
-    @RequestMapping(value="followers",method=RequestMethod.POST)
-    public ModelAndView followers(HttpServletRequest request){
-        ModelAndView mav=new ModelAndView();
-        User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
-        if(user!=null) {
-            List<Integer> followers = relationService.allFollowers(user);
-            mav.addObject("followers", followers);
-            mav.setViewName("showallfollowers");
-        }
-        return mav;
-    }
-    /*get all followees*/
-    @RequestMapping(value="followees",method=RequestMethod.POST)
-    public ModelAndView followees(HttpServletRequest request){
-        ModelAndView mav=new ModelAndView();
-        User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
-        if(user!=null) {
-            List<Integer> followees = relationService.allFollowees(user);
-            mav.addObject("followees", followees);
-            mav.setViewName("showallfollowees");
-        }
-        return mav;
-    }
+
     /*
      * session management, find password.....
      * */
