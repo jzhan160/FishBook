@@ -26,4 +26,15 @@ public class RelationServiceImpl implements RelationService {
 
         return followeeId;
     }
+
+    @Override
+    public List<Integer> allFollowers(User user){
+        List<UserRelationship> userRelationships = relationshipMapper.selectByFollowerId(user.getUserid());
+        List<Integer> followerId = new ArrayList<>();
+        for(UserRelationship r : userRelationships){
+            followerId.add(r.getFollowerid());
+        }
+
+        return followerId;
+    }
 }
