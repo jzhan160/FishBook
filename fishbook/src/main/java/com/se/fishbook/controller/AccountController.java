@@ -7,7 +7,10 @@ import com.se.fishbook.service.UserService;
 import com.se.fishbook.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,9 +32,30 @@ public class AccountController {
 
     //direct to the profile page
     @RequestMapping("/profile")
-    public String profile(){
-        return "account/profile";
+    public ModelAndView profile(HttpServletRequest request){
+        System.out.println("in index page");
+        System.out.println("user in session:"+request.getSession().getAttribute(Constants.CURRENT_USER));
+        User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
+        ModelAndView mv = new ModelAndView("account/profile");
+        if (user!=null){
+            System.out.println("==================Loading the post...===============");
+            List<Post> posts = postService.postByUserId(user.getUserid());
+            System.out.println("==================Total Num:"+ posts.size() +"===============");
+            System.out.println(posts.get(0).getContent());
+            mv.addObject("posts",posts);
+        }
+        return mv;
     }
+
+    @RequestMapping("/deletePost/{postid}")
+    private String deletePost(@PathVariable String postid,HttpServletRequest request){
+        System.out.println("Delete.....");
+        System.out.println(postid);
+        /*here we need to implement the deletion from the post table*/
+        return "redirect:/account/profile";
+    }
+
+
 
     //direct to the page where you can edit the password
     @RequestMapping("/edit_password")
@@ -62,18 +86,4 @@ public class AccountController {
         return "";
     }
 
-    //return the personal page
-    @RequestMapping("/personal_post")
-    public String personalPage(HttpServletRequest request){
-        System.out.println("in index page");
-        System.out.println("user in session:"+request.getSession().getAttribute(Constants.CURRENT_USER));
-        User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
-        if (user!=null){
-            System.out.println("==================Loading the post...===============");
-            List<Post> posts = postService.postByUserId(user.getUserid());
-            System.out.println("==================Total Num:"+ posts.size() +"===============");
-            //TODO: model and view???
-        }
-        return "account";
-    }
 }

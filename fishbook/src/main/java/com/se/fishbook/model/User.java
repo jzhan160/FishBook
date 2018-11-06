@@ -1,5 +1,7 @@
 package com.se.fishbook.model;
 
+import com.se.fishbook.util.DateUtil;
+
 import java.util.Date;
 
 public class User extends UserKey {
@@ -39,8 +41,8 @@ public class User extends UserKey {
         this.gender = gender == null ? null : gender.trim();
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public String getCreatetime() {
+        return DateUtil.date2Str(this.createtime);
     }
 
     public void setCreatetime(Date createtime) {

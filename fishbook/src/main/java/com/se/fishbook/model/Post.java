@@ -1,5 +1,7 @@
 package com.se.fishbook.model;
 
+import com.se.fishbook.util.DateUtil;
+
 import java.util.Date;
 
 public class Post {
@@ -35,8 +37,8 @@ public class Post {
         this.content = content == null ? null : content.trim();
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public String getCreatetime() {
+        return DateUtil.date2Str(createtime);
     }
 
     public void setCreatetime(Date createtime) {

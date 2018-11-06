@@ -39,7 +39,7 @@ public class RelationController {
         if(user!=null) {
             List<Integer> followers = relationService.allFollowers(user);
             mav.addObject("followers", followers);
-            mav.setViewName("showallfollowers");
+            mav.setViewName("showAllFollowers");
         }
         return mav;
     }
@@ -51,7 +51,7 @@ public class RelationController {
         if(user!=null) {
             List<Integer> followees = relationService.allFollowees(user);
             mav.addObject("followees", followees);
-            mav.setViewName("showallfollowees");
+            mav.setViewName("showAllFollowees");
         }
         return mav;
     }

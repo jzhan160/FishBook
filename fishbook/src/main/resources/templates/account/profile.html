@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html   xmlns:th="http://www.w3.org/1999/xhtml">
+<html  xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,8 +10,8 @@
     <link th:href="@{/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
     <link th:href="@{/css/main.css}" rel="stylesheet">
     <link th:href="@{/webuploader/webuploader.css}" rel="stylesheet">
-    <link th:href="@{/cropper/2.3.4/cropper.css}" rel="stylesheet">
-    <script th:src="@{/jquery/1.12.4/jquery.min.js}"></script>
+    <link th:href="@{/2.3.4/cropper.css}" rel="stylesheet">
+    <script th:src="@{/1.12.4/jquery.min.js}"></script>
     <!-- <script th:src="@{/html5shiv/3.7.3/html5shiv.min.js}"></script>
     <script th:src="@{/respond.js/1.4.2/respond.min.js}"></script> -->
 </head>
@@ -45,9 +45,13 @@
                 </div>
                 <div class="box-body" style="padding-right: 200px;">
                     <div class="form-left">
-                        <p>previous post1</p>
-                        <p>previous post2</p>
-                        <p>previous post3</p>
+                        <div class="prev_posts" th:each="post:${posts}">
+                            <strong >Post</strong>
+                            <p th:text="${post.content}">Content</p>
+                            <p th:text="${post.createtime}">Create Time</p>
+                            <a th:href="'/account/deletePost/'+${post.postid}">delete</a>
+
+                        </div>
                         <strong class="box-title">New Post</strong>
                     </div>
                     <div class="form-right">
