@@ -35,17 +35,20 @@ public class MainController {
 
     //Personal main page
     @RequestMapping("/index")
-    public String index(HttpServletRequest request) {
+    public ModelAndView index(HttpServletRequest request) {
         System.out.println("in index page");
         System.out.println("user in session:"+request.getSession().getAttribute(Constants.CURRENT_USER));
         User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
+        ModelAndView mv  = new ModelAndView();
         if (user!=null){
             System.out.println("==================Loading the post...===============");
             List<Post> posts = postService.postsByUserIds(relationService.allFollowees(user));
             System.out.println("==================Total Num:"+ posts.size() +"===============");
-            //TODO: model and view???
+            //Set the Model and View
+            mv.setViewName("/index");
+            mv.addObject("posts", posts);
         }
-        return "index";
+        return mv;
     }
 
     @RequestMapping("home")
@@ -60,8 +63,8 @@ public class MainController {
 
     @RequestMapping(value = "login",method = RequestMethod.POST)
     public String login(User user, HttpServletRequest request) {
-        System.out.println("==================in the login method");
-        System.out.println("==================user is"+user);
+        System.out.println("==================in the login method===============");
+        System.out.println("==================user is "+user);
         UserKey key = new UserKey();
         key.setEmail(user.getEmail());
         User user_checked = userService.selectByEmail(key);
