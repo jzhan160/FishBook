@@ -1,0 +1,60 @@
+<header class="navbar navbar-static-top navbar-fixed-top manual-header" role="banner" th:fragment="header"
+        xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="container">
+        <div class="navbar-header col-sm-12 col-md-7 col-lg-6">
+            <a href="/" class="navbar-brand" th:utext="FishBook"></a>
+            <nav class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/index" title="home">Home</a>
+                    </li>
+                    <li>
+                        <a href="/map/" title="map">Map</a>
+                    </li>
+                    <li>
+                        <a href="/relation/followers" title="follower">Followers</a>
+                    </li>
+                    <li>
+                        <a href="/relation/followees" title="followee">Following</a>
+                    </li>
+                </ul>
+
+            </nav>
+
+        </div>
+
+        <nav class="navbar-collapse hidden-xs hidden-sm" role="navigation">
+            <ul class="nav navbar-nav navbar-right" th:if="${session.user}">
+                <li>
+                    <div class="img user-info" data-toggle="dropdown">
+                        <img th:src="${session.user.imagepath}" class="img-circle userbar-avatar">
+                        <div class="userbar-content">
+                            <span th:text="${session.user.username}"></span>
+                            <div></div>
+                        </div>
+                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                    </div>
+
+                    <ul class="dropdown-menu user-info-dropdown" role="menu">
+                        <li>
+                            <a href="/account/profile" title="profile"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a href="/account/notification" title="notification"><i class="fa fa-university" aria-hidden="true"></i> Notifications</a>
+                        </li>
+                        <li>
+                            <a href="/account/setting" title="setting"><i class="fa fa-book" aria-hidden="true"></i> Setting</a>
+                        </li>
+                        <li>
+                            <a href="/logout" title="logout"><i class="fa fa-sign-out"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" role="menu" th:if="${session.user == null}">
+                <li><a href="/login" title="login">Login</a></li>
+                <li><a href="/sign_up" title="sign_up">Sign Up</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>

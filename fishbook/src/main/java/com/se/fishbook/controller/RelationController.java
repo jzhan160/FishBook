@@ -6,7 +6,6 @@ import com.se.fishbook.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +38,7 @@ public class RelationController {
         if(user!=null) {
             List<Integer> followers = relationService.allFollowers(user);
             mav.addObject("followers", followers);
-            mav.setViewName("relationship/showAllFollowers");
+            mav.setViewName("relationship/followers");
         }
         return mav;
     }
@@ -51,7 +50,7 @@ public class RelationController {
         if(user!=null) {
             List<Integer> followees = relationService.allFollowees(user);
             mav.addObject("followees", followees);
-            mav.setViewName("relationship/showAllFollowees");
+            mav.setViewName("relationship/following");
         }
         return mav;
     }
