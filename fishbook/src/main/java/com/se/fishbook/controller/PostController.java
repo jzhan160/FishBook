@@ -21,6 +21,7 @@ public class PostController {
     //submit your new post
     @RequestMapping("/submit_post")
     public String submitPost(){
+
         return "";
     }
 }

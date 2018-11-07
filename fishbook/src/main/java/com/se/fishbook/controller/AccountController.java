@@ -1,7 +1,9 @@
 package com.se.fishbook.controller;
+import com.se.fishbook.model.Comment;
 import com.se.fishbook.model.Notification;
 import com.se.fishbook.model.Post;
 import com.se.fishbook.model.User;
+import com.se.fishbook.service.CommentService;
 import com.se.fishbook.service.NotificationService;
 import com.se.fishbook.service.PostService;
 import com.se.fishbook.service.UserService;
@@ -28,7 +30,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
 * AccountController class handles requests about user accounts
@@ -45,6 +49,9 @@ public class AccountController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private CommentService commentService;
+
     //direct to the profile page
     @RequestMapping("/profile")
     public ModelAndView profile(HttpServletRequest request){
@@ -56,10 +63,15 @@ public class AccountController {
             System.out.println("==================Loading the post...===============");
             List<Post> posts = postService.postByUserId(user.getUserid());
             System.out.println("==================Total Num:"+ posts.size() +"===============");
-            System.out.println(posts.get(0).getContent());
+            Map<Integer, List<Comment>> comments = new HashMap<>();
+            int i = 0;
+            for(Post post : posts){
+                comments.put(i,commentService.selectCommentsByPostId(post.getPostid()));
+            }
             //Set the Model and View
-            mv.setViewName("/account/profile");
-            mv.addObject("posts",posts);
+            mv.setViewName("/index");
+            mv.addObject("posts", posts);
+            mv.addObject("comments", comments);
             return mv;
         }
         mv.setViewName("/index");

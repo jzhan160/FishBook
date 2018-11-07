@@ -1,8 +1,10 @@
 package com.se.fishbook.controller;
 
+import com.se.fishbook.model.Comment;
 import com.se.fishbook.model.Post;
 import com.se.fishbook.model.User;
 import com.se.fishbook.model.UserKey;
+import com.se.fishbook.service.CommentService;
 import com.se.fishbook.service.PostService;
 import com.se.fishbook.service.RelationService;
 import com.se.fishbook.service.UserService;
@@ -18,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
  * MainController class deals with login and registration activities
@@ -34,6 +38,9 @@ public class MainController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private CommentService commentService;
+
     //Personal main page
     @RequestMapping("/index")
     public ModelAndView index(HttpServletRequest request) {
@@ -45,10 +52,19 @@ public class MainController {
             System.out.println("==================Loading the post...===============");
             List<Post> posts = postService.postsByUserIds(relationService.allFollowees(user));
             System.out.println("==================Total Num:"+ posts.size() +"===============");
+            Map<Integer, List<Comment>> comments = new HashMap<>();
+            int i = 0;
+            for(Post post : posts){
+                comments.put(i,commentService.selectCommentsByPostId(post.getPostid()));
+            }
+
             //Set the Model and View
             mv.setViewName("/index");
             mv.addObject("posts", posts);
+            mv.addObject("comments", comments);
+            return mv;
         }
+        mv.setViewName("/index");
         return mv;
     }
 
