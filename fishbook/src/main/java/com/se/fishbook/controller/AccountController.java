@@ -1,4 +1,5 @@
 package com.se.fishbook.controller;
+import com.se.fishbook.model.Notification;
 import com.se.fishbook.model.Post;
 import com.se.fishbook.model.User;
 import com.se.fishbook.service.NotificationService;
@@ -47,7 +48,7 @@ public class AccountController {
     //direct to the profile page
     @RequestMapping("/profile")
     public ModelAndView profile(HttpServletRequest request){
-        System.out.println("in index page");
+        System.out.println("in profile page");
         System.out.println("user in session:"+request.getSession().getAttribute(Constants.CURRENT_USER));
         User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
         ModelAndView mv = new ModelAndView("account/profile");
@@ -56,8 +57,12 @@ public class AccountController {
             List<Post> posts = postService.postByUserId(user.getUserid());
             System.out.println("==================Total Num:"+ posts.size() +"===============");
             System.out.println(posts.get(0).getContent());
+            //Set the Model and View
+            mv.setViewName("/account/profile");
             mv.addObject("posts",posts);
+            return mv;
         }
+        mv.setViewName("/index");
         return mv;
     }
 
@@ -165,8 +170,24 @@ public class AccountController {
 
 
     @RequestMapping("/notification")
-    public String notification(){
-        return "";
+    public ModelAndView notification(HttpServletRequest request){
+        System.out.println("in index page");
+        System.out.println("user in session:"+request.getSession().getAttribute(Constants.CURRENT_USER));
+        User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
+        ModelAndView mv  = new ModelAndView();
+        System.out.println("=================================");
+        if (user!=null){
+            List<Notification> readN = notificationService.showReadNotifications(user.getUserid());
+            List<Notification> unreadN = notificationService.showUnreadNotifications(user.getUserid());
+            System.out.println("==================Total Num:"+ unreadN.size() +"===============");
+            mv.setViewName("/account/notification");
+            mv.addObject("unreadNotifications", unreadN);
+            mv.addObject("readNotifications", readN);
+            return mv;
+        }
+        mv.setViewName("/index");
+        return mv;
+
     }
 
 }
