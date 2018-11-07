@@ -60,7 +60,7 @@ public class MainController {
         return result;
     }
 
-    @RequestMapping(value = "login",method = RequestMethod.POST)
+   /* @RequestMapping(value = "login",method = RequestMethod.POST)
     public @ResponseBody  Result login(User user, HttpServletRequest request) {
         System.out.println("==================in the login method");
         System.out.println("==================user is"+user);
@@ -88,9 +88,9 @@ public class MainController {
         // System.out.println(result.getCode());
         // System.out.println(result.getMsg());
         return result;
-    }
+    }*/
 
-   /* @RequestMapping(value = "login",method = RequestMethod.POST)
+    @RequestMapping(value = "login",method = RequestMethod.POST)
     public String login(User user, HttpServletRequest request) {
         System.out.println("==================in the login method===============");
         System.out.println("==================user is "+user);
@@ -120,7 +120,6 @@ public class MainController {
         return "index";
     }
 
-*/
     @RequestMapping("/sign_up")
     public String sign_up() {
         return "";
