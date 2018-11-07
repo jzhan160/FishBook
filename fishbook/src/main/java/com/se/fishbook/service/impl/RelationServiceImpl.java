@@ -40,4 +40,14 @@ public class RelationServiceImpl implements RelationService {
 
         return followerId;
     }
+
+    public void deleteRelationship(Integer followerid,Integer followeeid){
+        UserRelationshipExample re=new UserRelationshipExample();
+        re.createCriteria().andFolloweeidEqualTo(followeeid).andFolloweridEqualTo(followerid);
+        relationshipMapper.deleteByExample(re);
+    }
+
+    public void addRelationship(Integer followerid, Integer followeeid){
+        
+    }
 }
