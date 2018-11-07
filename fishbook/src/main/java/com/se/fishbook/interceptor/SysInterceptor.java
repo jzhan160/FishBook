@@ -1,4 +1,4 @@
-package com.se.fishbook.util.interceptor;
+package com.se.fishbook.interceptor;
 
 import com.se.fishbook.model.User;
 import com.se.fishbook.util.Constants;

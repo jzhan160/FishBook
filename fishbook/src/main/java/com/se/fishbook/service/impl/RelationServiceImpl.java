@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-
+/*Suppose the current user is A. So followers are people who are following A.
+  In other words, A is the followee.
+* And followees are people who are followed by A. Now A becomes the follower*/
 @Service("relationService")
 public class RelationServiceImpl implements RelationService {
     @Resource
@@ -18,7 +20,8 @@ public class RelationServiceImpl implements RelationService {
 
     @Override
     public List<Integer> allFollowees(User user) {
-        List<UserRelationship> userRelationships = relationshipMapper.selectByFolloweeId(user.getUserid());
+
+        List<UserRelationship> userRelationships = relationshipMapper.selectByFollowerId(user.getUserid());
         List<Integer> followeeId = new ArrayList<>();
         for(UserRelationship r : userRelationships){
             followeeId.add(r.getFolloweeid());
@@ -29,7 +32,7 @@ public class RelationServiceImpl implements RelationService {
 
     @Override
     public List<Integer> allFollowers(User user){
-        List<UserRelationship> userRelationships = relationshipMapper.selectByFollowerId(user.getUserid());
+        List<UserRelationship> userRelationships = relationshipMapper.selectByFolloweeId(user.getUserid());
         List<Integer> followerId = new ArrayList<>();
         for(UserRelationship r : userRelationships){
             followerId.add(r.getFollowerid());

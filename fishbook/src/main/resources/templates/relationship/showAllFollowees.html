@@ -3,8 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>showAllFollowees</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
 </head>
 <body>
+<div class="manual-reader">
+    <div th:replace="/widgets/header :: header"></div>
+    <div class="container manual-body">
+        <strong>People you are following</strong>
 
+        <div class="followees" th:each="folowee:${followees}">
+            <p th:text="${folowee}"></p><!--now the followee is just id which is a integer type-->
+
+            <!--we need a User type followee here-->
+            <!-- <p th:text="${followee.username}">
+                 <a href="profile_of_followees">username</a>
+             </p>-->
+        </div>
+    </div>
+</div>
 </body>
 </html>

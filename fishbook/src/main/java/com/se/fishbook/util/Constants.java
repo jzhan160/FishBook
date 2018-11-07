@@ -18,5 +18,5 @@ public class Constants {
  	 
      //public static final String AVATAR_PATH = ClassUtils.getDefaultClassLoader().getResource("static").getPath()+SF_FILE_SEPARATOR+"images"+SF_FILE_SEPARATOR+"avatar";
      
-     public static final String AVATAR_PATH  = "avatar";//photograph
+     public static final String AVATAR_PATH  = "head";//photograph
 }
