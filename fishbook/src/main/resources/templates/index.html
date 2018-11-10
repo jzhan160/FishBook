@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -38,6 +39,27 @@
         <!-- Posts -->
         <div class="row text-center" style="display:flex; flex-wrap: wrap;">
 
+            <!-- Iterations -->
+            <tr th:each="post : ${posts}">
+                <div class="col-md-4">
+                    <div class="card mx-1 shadow-sm mb-3">
+                        <div class="card-header"> <img class="mr-1" src="https://placekitten.com/400/400" style="height:30px; width:30px;" th:text=${post.user.username} >
+                            </div>
+                        <img class="card-img-bottom" src="https://s3.amazonaws.com/photos.fishidy.com/5bc34fdf6e8bb8065848a9d2_800"
+                             data-holder-rendered="true" style="height: 100%; width: 100%;">
+                        <p class="card-caption mt-3" th:text="${post.post.content}"></p>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between align-items-center mx-1">
+                                <i class="fa fa-comment"></i>
+                                <i class="far fa-thumbs-up"></i>
+                                <i class="fas fa-share-alt-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+
+            <!-- Fake demos -->
             <div class="col-md-4">
                 <div class="card shadow-sm mb-3">
                     <!-- Avartar -->
@@ -45,7 +67,7 @@
                         Andy Figiel </div>
                     <!-- Image -->
                     <img class="card-img-bottom" src="https://s3.amazonaws.com/photos.fishidy.com/5614814166b01a04d00c5e98_800"
-                        data-holder-rendered="true" style="height: 100%; width: 100%;">
+                         data-holder-rendered="true" style="height: 100%; width: 100%;">
                     <!-- Description -->
                     <p class="card-caption mt-3">3 lb. Largemouth Bass</p>
                     <!-- Footer -->
@@ -59,9 +81,10 @@
                 </div>
             </div>
 
+
             <div class="col-md-4">
                 <div class="card mx-1 shadow-sm mb-3">
-                    <div class="card-header"> <img class="mr-1" src="https://placekitten.com/400/400" style="height:30px; width:30px;">
+                    <div class="card-header"> <img class="mr-1" src="https://placekitten.com/400/400" style="height:30px; width:30px;" >
                         Noah Shapiro </div>
                     <img class="card-img-bottom" src="https://s3.amazonaws.com/photos.fishidy.com/5bc34fdf6e8bb8065848a9d2_800"
                         data-holder-rendered="true" style="height: 100%; width: 100%;">
