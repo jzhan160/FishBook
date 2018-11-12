@@ -18,7 +18,7 @@ public class WebAppConfigurer extends WebMvcConfigurerAdapter {
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
+/*
 @Configuration
 public class WebAppConfigurer extends WebMvcConfigurerAdapter {
 
@@ -27,4 +27,4 @@ public class WebAppConfigurer extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 
-}
+}*/

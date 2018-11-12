@@ -69,12 +69,12 @@ public class AccountController {
                 comments.put(i,commentService.selectCommentsByPostId(post.getPostid()));
             }
             //Set the Model and View
-            mv.setViewName("/index");
+            mv.setViewName("/account/profile");
             mv.addObject("posts", posts);
             mv.addObject("comments", comments);
             return mv;
         }
-        mv.setViewName("/index");
+        mv.setViewName("/account/profile");
         return mv;
     }
 
@@ -136,7 +136,7 @@ public class AccountController {
     }
 
     //submit a personal image
-   @RequestMapping(value="update_image")
+   @RequestMapping(value="/update_image")
     public @ResponseBody
     Result upload(@RequestParam("file")MultipartFile[] files, HttpServletRequest request) {
        System.out.println("upload personal image");
@@ -153,7 +153,7 @@ public class AccountController {
                         //创建输出文件对象
                         //String uploadPath = ResourceUtils.getURL("classpath:").getPath()+"\\static\\image\\";
                        // File outFile = new File(uploadPath + Constants.AVATAR_PATH + name);
-                        File outFile = new File("D://GitHub//FishBook//fishbook//"+name);
+                        File outFile = new File("E:\\JavaWeb\\SpringBoot\\"+name);
                         //拷贝文件到输出文件对象
                         FileUtils.copyInputStreamToFile(files[0].getInputStream(), outFile);
 

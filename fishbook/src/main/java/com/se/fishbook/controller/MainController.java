@@ -45,17 +45,18 @@ public class MainController {
     @RequestMapping("/index")
     public ModelAndView index(HttpServletRequest request) {
         System.out.println("in index page");
-        System.out.println("user in session:"+request.getSession().getAttribute(Constants.CURRENT_USER));
-        User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
-        ModelAndView mv  = new ModelAndView();
-        if (user!=null){
+        System.out.println("user in session:" + request.getSession().getAttribute(Constants.CURRENT_USER));
+        User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
+        ModelAndView mv = new ModelAndView();
+        if (user != null) {
             System.out.println("==================Loading the post...===============");
             List<Post> posts = postService.postsByUserIds(relationService.allFollowees(user));
-            System.out.println("==================Total Num:"+ posts.size() +"===============");
+            System.out.println("==================Total Num:" + posts.size() + "===============");
             Map<Integer, List<Comment>> comments = new HashMap<>();
             int i = 0;
-            for(Post post : posts){
-                comments.put(i,commentService.selectCommentsByPostId(post.getPostid()));
+            for (Post post : posts) {
+                comments.put(i, commentService.selectCommentsByPostId(post.getPostid()));
+                i++;
             }
 
             //Set the Model and View
@@ -69,7 +70,8 @@ public class MainController {
     }
 
     @RequestMapping("home")
-    public @ResponseBody Result  home() {
+    public @ResponseBody
+    Result home() {
         System.out.println("home");
         Result result = new Result();
         result.setCode(Constants.SUCCESS);
@@ -106,28 +108,28 @@ public class MainController {
         return result;
     }*/
 
-    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(User user, HttpServletRequest request) {
         System.out.println("==================in the login method===============");
-        System.out.println("==================user is "+user);
+        System.out.println("==================user is " + user);
         UserKey key = new UserKey();
         key.setEmail(user.getEmail());
         User user_checked = userService.selectByEmail(key);
-        System.out.println("user_checked is "+user_checked);
+        System.out.println("user_checked is " + user_checked);
 
         Result result = new Result();
-        if(user_checked!=null){
-            if(user_checked.getPassword().equals(user.getPassword())){
+        if (user_checked != null) {
+            if (user_checked.getPassword().equals(user.getPassword())) {
                 request.getSession().setAttribute(Constants.CURRENT_USER, user_checked);
                 //System.out.println("user is "+user);
                 // System.out.println("user_checked is "+user_checked);
 
                 result.setCode(Constants.SUCCESS);
-            }else{
+            } else {
                 result.setCode(Constants.ERROR);
                 result.setMsg("Incorrect Password!");
             }
-        }else{
+        } else {
             result.setCode(Constants.ERROR);
             result.setMsg("Account does not exist!");
         }
@@ -141,8 +143,8 @@ public class MainController {
         return "";
     }
 
-    @RequestMapping(value="logout",method=RequestMethod.GET)
-    public String logout(HttpServletRequest request){
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest request) {
         request.getSession().setAttribute(Constants.CURRENT_USER, null);
         return "/index";
     }
