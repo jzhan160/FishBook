@@ -1,9 +1,6 @@
 package com.se.fishbook.controller;
 
-import com.se.fishbook.model.Comment;
-import com.se.fishbook.model.Post;
-import com.se.fishbook.model.User;
-import com.se.fishbook.model.UserKey;
+import com.se.fishbook.model.*;
 import com.se.fishbook.service.CommentService;
 import com.se.fishbook.service.PostService;
 import com.se.fishbook.service.RelationService;
@@ -14,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,18 +49,29 @@ public class MainController {
         if (user != null) {
             System.out.println("==================Loading the post...===============");
             List<Post> posts = postService.postsByUserIds(relationService.allFollowees(user));
+<<<<<<< HEAD
             System.out.println("==================Total Num:" + posts.size() + "===============");
             Map<Integer, List<Comment>> comments = new HashMap<>();
             int i = 0;
             for (Post post : posts) {
                 comments.put(i, commentService.selectCommentsByPostId(post.getPostid()));
                 i++;
+=======
+            List<PostDisplay> postDisplays = new ArrayList<>();
+            for(Post post : posts){
+                PostDisplay pd = new PostDisplay();
+                UserKey key = new UserKey();
+                key.setUserid(post.getAuthorid());
+                User author  = userService.selectById(key);
+                pd.setPost(post);
+                pd.setUser(author);
+                postDisplays.add(pd);
+>>>>>>> 93779f1b71d565234dcba4868aeebaeb3b2569f2
             }
-
+            System.out.println("==================Total Num:"+ posts.size() +"===============");
             //Set the Model and View
             mv.setViewName("/index");
-            mv.addObject("posts", posts);
-            mv.addObject("comments", comments);
+            mv.addObject("posts", postDisplays);
             return mv;
         }
         mv.setViewName("/index");
