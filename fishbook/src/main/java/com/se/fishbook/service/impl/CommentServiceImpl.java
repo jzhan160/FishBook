@@ -22,4 +22,9 @@ public class CommentServiceImpl implements CommentService {
         ce.setOrderByClause("CreateTime");
         return commentMapper.selectByExample(ce);
     }
+
+    @Override
+    public void addComment(Comment comment) {
+        commentMapper.insert(comment);
+    }
 }

@@ -1,26 +1,28 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>title</title>
+    <meta charset="UTF-8">
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
     </script>
+
+
+    <div id="div1"><h2>comment1</h2></div>
+    <button>comments</button>
+
     <script>
         $(document).ready(function(){
             $("button").click(function(){
-                $.ajax({url:"/test/Ajax/test",
-                    data: {"id" : 1},
+                $.ajax({url:"/comment/showComment",
+                    data: {"postId" : 2},
                     success:function(result){
                         var re = result;
-                        $("#div1").html(re.lat);
+                        $("#div1").html(re[0].comment.content);
                     }});
             });
         });
     </script>
 </head>
 <body>
-
-<div id="div1"><h2>comment1</h2></div>
-<button>comments</button>
 
 </body>
 </html>
