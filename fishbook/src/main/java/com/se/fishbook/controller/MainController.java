@@ -49,6 +49,7 @@ public class MainController {
         if (user != null) {
             System.out.println("==================Loading the post...===============");
             List<Post> posts = postService.postsByUserIds(relationService.allFollowees(user));
+<<<<<<< HEAD
 
             System.out.println("==================Total Num:" + posts.size() + "===============");
             Map<Integer, List<Comment>> comments = new HashMap<>();
@@ -57,6 +58,7 @@ public class MainController {
                 comments.put(i, commentService.selectCommentsByPostId(post.getPostid()));
                 i++;
             }
+=======
 >>>>>>> 149c42b4313c90d585d4d71a7faa3a0722568a16
             List<PostDisplay> postDisplays = new ArrayList<>();
             for(Post post : posts){
