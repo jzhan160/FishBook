@@ -239,11 +239,17 @@
 <body>
 <div class="container manual-body">
     <label>
-        <a href="javascript:;" data-toggle="modal" data-target="#upload-logo-panel">
+     <!--   <a href="javascript:;" data-toggle="modal" data-target="#upload-logo-panel">
             <img src="/static/image/head/default.jpg" onerror="this.src='/images/middle.gif'" class="img-circle" alt="头像" style="max-width: 120px;max-height: 120px;" id="headimgurl">
-        </a>
+        </a>-->
+        <form action="/setting/upload" method="post" enctype="multipart/form-data" onsubmit="return checkPhoto(this)">
+            <img src="/static/image/head/default.jpg" onerror="this.src='/images/middle.gif'" class="img-circle" alt="头像" style="max-width: 120px;max-height: 120px;" id="headimgurl">
+            <input type="file" name="fileimg" id="fileimg">
+            <span class="s1" id="img_msg"></span>
+            <input type="submit" value="upload"/>
+        </form>
     </label>
-    <a href="/setting/">home</a>
+
 </div>
 <!-- Start Modal -->
 <div class="modal fade" id="upload-logo-panel" tabindex="-1" role="dialog" aria-labelledby="修改头像" aria-hidden="true">
@@ -294,8 +300,18 @@
         }).on("show.bs.modal",function () {
             window.modalHtml = $("#upload-logo-panel").find(".modal-body").html();
         });
-
-        try {
+        function checkPhoto(myupload){ // 检测上传是否符合要求
+            var file=document.getElementById("fileimg");
+            var types=file.value.substr(file.value.lastIndexOf(".")+1).toLowerCase();
+            if(file.value==""){
+                alert("Please select the image");
+                return false;
+            }else if(types!="jpg" && types!="png"){
+                alert("只能上传jpg,png格式的图片");
+                return false;
+            }
+        }
+       /* try {
             var uploader = WebUploader.create({
                 auto: false,
                 swf: '/webuploader/Uploader.swf',
@@ -365,7 +381,7 @@
             });
         }catch(e){
             console.log(e);
-        }
+        }*/
     });
 </script>
 </body>

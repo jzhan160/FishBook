@@ -8,11 +8,13 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +31,7 @@ public class SettingController {
     	return "home";
 	}
 
-	@RequestMapping(value="upload")
+	/*@RequestMapping(value="upload",method = RequestMethod.POST)
     public @ResponseBody
 	Result upload(@RequestParam("file")MultipartFile[] files, HttpServletRequest request) {
 		Result result = new Result();
@@ -66,4 +68,34 @@ public class SettingController {
 		}
 		return result;
     }
+	*/
+    @RequestMapping(value="upload",method = RequestMethod.POST)
+	public String upload(MultipartFile fileimg, HttpServletRequest request)
+			throws Exception{
+		System.out.println("upload=====");
+		//String path="";
+		if(!fileimg.isEmpty()){
+			// 上传的文件路径  建在WebRoot目录下--fileupload
+			//path = session.getServletContext().getRealPath("/fileupload/");
+			//System.out.println(path);
+			// 上传文件名
+			String filename = fileimg.getOriginalFilename();
+
+			// 做一个判断 图片扩展名   substring(int index) 返回一个以index为索引作为起点的含头不含尾的后面的字符串
+			String types = filename.substring(filename.lastIndexOf(".")+1).toLowerCase();
+
+			// 如果有需求是要修改上传的图片的名字为用户id开头的
+			//String newfilename = account+filename.substring(filename.lastIndexOf(".")); // 取得的是 .jpg
+
+			File filepath = new File(uploadPath,filename);
+			// 判断路径是否存在，不存在就创建一个
+			if(!filepath.getParentFile().exists()){
+				filepath.getParentFile().mkdirs();
+			}
+			fileimg.transferTo(new File(uploadPath + File.separator + filename)); // 会上传到服务器中的路径
+		}
+
+		return "account/profile";
+	}
+
 }

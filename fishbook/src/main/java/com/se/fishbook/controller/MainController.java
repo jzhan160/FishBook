@@ -49,14 +49,14 @@ public class MainController {
         if (user != null) {
             System.out.println("==================Loading the post...===============");
             List<Post> posts = postService.postsByUserIds(relationService.allFollowees(user));
-<<<<<<< HEAD
+
             System.out.println("==================Total Num:" + posts.size() + "===============");
             Map<Integer, List<Comment>> comments = new HashMap<>();
             int i = 0;
             for (Post post : posts) {
                 comments.put(i, commentService.selectCommentsByPostId(post.getPostid()));
                 i++;
-=======
+            }
             List<PostDisplay> postDisplays = new ArrayList<>();
             for(Post post : posts){
                 PostDisplay pd = new PostDisplay();
@@ -66,7 +66,6 @@ public class MainController {
                 pd.setPost(post);
                 pd.setUser(author);
                 postDisplays.add(pd);
->>>>>>> 93779f1b71d565234dcba4868aeebaeb3b2569f2
             }
             System.out.println("==================Total Num:"+ posts.size() +"===============");
             //Set the Model and View
