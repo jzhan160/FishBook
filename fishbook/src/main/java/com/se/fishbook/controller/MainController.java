@@ -57,6 +57,7 @@ public class MainController {
                 comments.put(i, commentService.selectCommentsByPostId(post.getPostid()));
                 i++;
             }
+>>>>>>> 149c42b4313c90d585d4d71a7faa3a0722568a16
             List<PostDisplay> postDisplays = new ArrayList<>();
             for(Post post : posts){
                 PostDisplay pd = new PostDisplay();

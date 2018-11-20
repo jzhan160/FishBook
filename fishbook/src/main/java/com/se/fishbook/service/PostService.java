@@ -7,4 +7,6 @@ public interface PostService {
     List<Post> postsByUserIds(List<Integer> ids);
 
     List<Post> postByUserId(Integer id);
+
+    Integer addLikesCountByOne(Integer id);
 }

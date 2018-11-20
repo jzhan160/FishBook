@@ -25,6 +25,7 @@ public class CommentController {
     //submit your new comment
     @RequestMapping("/submit_comment")
     public String submitComment(){
+
         return "";
     }
 
@@ -41,6 +42,7 @@ public class CommentController {
     public String test1(){
         return "/test/testAjax";
     }
+
     @RequestMapping("/test/Ajax/test")
     @ResponseBody
     public int test1(HttpServletRequest request){

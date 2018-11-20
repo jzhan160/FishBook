@@ -15,6 +15,15 @@ public class PostServiceImpl implements PostService {
     private PostMapper postMapper;
 
     @Override
+    public Integer addLikesCountByOne(Integer id) {
+        Post p = postMapper.selectByPrimaryKey(id);
+        p.setLikecount(p.getLikecount() + 1);
+        int val = p.getLikecount();
+        postMapper.updateByPrimaryKey(p);
+        return val;
+    }
+
+    @Override
     public List<Post> postsByUserIds(List<Integer> ids) {
         PostExample post = new PostExample();
         post.createCriteria().andAuthoridIn(ids);
