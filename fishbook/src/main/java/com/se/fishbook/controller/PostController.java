@@ -40,7 +40,7 @@ public class PostController {
     public Integer addLikes(HttpServletRequest request){
         Integer postId = Integer.valueOf(request.getParameter("postId"));
         Integer val = postService.addLikesCountByOne(postId);
-        User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER)
+        User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
         notificationService.newLikes(postId, user.getUserid());
         return val;
     }
