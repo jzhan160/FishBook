@@ -5,7 +5,6 @@ import com.se.fishbook.service.CommentService;
 import com.se.fishbook.service.PostService;
 import com.se.fishbook.service.RelationService;
 import com.se.fishbook.service.UserService;
-import com.se.fishbook.test.JsonResult;
 import com.se.fishbook.util.Constants;
 import com.se.fishbook.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,7 +143,7 @@ public class MainController {
         }
         // System.out.println(result.getCode());
         // System.out.println(result.getMsg());
-        return "redirect:index";
+        return "index";
     }
 
     @RequestMapping("/sign_up")
@@ -161,36 +160,4 @@ public class MainController {
     /*
      * session management, find password.....
      * */
-
-    @RequestMapping("testJson")
-    public String testJson(){
-        return "test/testJson";
-    }
-
-
-    //get post location
-    //just for test
-    @ResponseBody
-    @RequestMapping(value = "/getData", method = RequestMethod.POST)
-    public List<JsonResult> getData(JsonResult jsonResult) {
-        System.out.println("==============getData");
-        System.out.println(jsonResult);
-        List<JsonResult> results = new ArrayList<>();
-        try {
-            //mock data
-            //we need locations from database
-            JsonResult jsonResult1 = new JsonResult();
-            jsonResult1.setLat(42.9974823);
-            jsonResult1.setLng(-76.1259995);
-            results.add( jsonResult1);
-            JsonResult jsonResult2 = new JsonResult();
-            jsonResult2.setLat(42.9972800);
-            jsonResult2.setLng(-76.1299064);
-            results.add( jsonResult2);
-
-        } catch (Exception e) {
-            System.out.println("error");
-        }
-        return results;
-    }
 }

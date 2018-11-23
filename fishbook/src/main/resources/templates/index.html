@@ -51,9 +51,7 @@
                         <div class="card-footer">
                             <div class="d-flex justify-content-between align-items-center mx-1">
                                 <i class="fa fa-comment"></i>
-
-                                <i class="far fa-thumbs-up" name = "post" th:id="'post' + ${post.post.postid}" th:text="${post.post.likecount}"></i>
-
+                                <i class="far fa-thumbs-up"></i>
                                 <i class="fas fa-share-alt-square"></i>
                             </div>
                         </div>
@@ -347,15 +345,5 @@
         });
     </script>-->
 </body>
-
-<script>
-    var list=document.getElementsByName("post")
-    for(var i=0;i<list.length;i++){
-        var a = list[i].innerHTML;
-        if(a == 0){
-            list[i].innerHTML ="Likes";
-        }
-    }
-</script>
 
 </html>
