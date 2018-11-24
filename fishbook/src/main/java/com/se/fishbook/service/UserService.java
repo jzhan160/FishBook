@@ -6,4 +6,5 @@ import com.se.fishbook.model.UserKey;
 public interface UserService {
     User selectById(UserKey key);
     User selectByEmail(UserKey key);
+    Integer addUser(User user);
 }

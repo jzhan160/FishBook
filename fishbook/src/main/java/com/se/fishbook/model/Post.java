@@ -84,4 +84,18 @@ public class Post {
     public void setLikecount(Integer likecount) {
         this.likecount = likecount;
     }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "postid=" + postid +
+                ", content='" + content + '\'' +
+                ", createtime=" + createtime +
+                ", imagepath='" + imagepath + '\'' +
+                ", authorid=" + authorid +
+                ", locationlatitude=" + locationlatitude +
+                ", locationlongitude=" + locationlongitude +
+                ", likecount=" + likecount +
+                '}';
+    }
 }

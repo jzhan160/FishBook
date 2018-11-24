@@ -112,10 +112,10 @@
   </delete>
 
   <insert id="insert" parameterType="com.se.fishbook.model.Post" >
-    insert into post (PostId, Content, CreateTime, 
+    insert into post (PostId, Content, CreateTime,
       ImagePath, AuthorId, LocationLatitude, 
       LocationLongitude, LikeCount)
-    values (#{postid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+    values (#{postid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
       #{imagepath,jdbcType=VARCHAR}, #{authorid,jdbcType=INTEGER}, #{locationlatitude,jdbcType=DOUBLE}, 
       #{locationlongitude,jdbcType=DOUBLE}, #{likecount,jdbcType=INTEGER})
   </insert>

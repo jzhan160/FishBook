@@ -51,7 +51,7 @@ public class DateUtil {
 	 *
 	 * @return
 	 */
-	public static String getTime() {
+	public static  String  getTime() {
 		return sdfTime.format(new Date());
 	}
 

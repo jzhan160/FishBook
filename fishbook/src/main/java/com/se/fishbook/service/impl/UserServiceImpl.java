@@ -24,4 +24,9 @@ public class UserServiceImpl implements UserService{
     public User selectByEmail(UserKey key) {
         return userMapper.selectByPrimaryKey(key);
     }
+
+    @Override
+    public Integer addUser(User user) {
+        return userMapper.insert(user);
+    }
 }

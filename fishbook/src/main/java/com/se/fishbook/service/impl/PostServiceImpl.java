@@ -24,6 +24,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Integer insert(Post post) {
+        return postMapper.insert(post);
+    }
+
+    @Override
     public List<Post> postsByUserIds(List<Integer> ids) {
         PostExample post = new PostExample();
         post.createCriteria().andAuthoridIn(ids);
