@@ -190,16 +190,17 @@
                         <!--<div class="modal-header">-->
                         <!--</div>-->
                         <div class="modal-body">
-                            <form  enctype="multipart/form-data" method="post" action="/post/submit_post">
+                            <form>
                                 <div class="form-group row align-items-center">
                                     <div class="col-md-12">
-                                        <textarea class="form-control" id="content" name="content" rows="4"
+                                        <textarea class="form-control" id="feedback" name="feedback" rows="4"
                                             placeholder="What's happenning?"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group d-flex">
                                     <div class="d-flex justify-content-between col-md-2 mt-2">
-                                        <input  type="file" name="fishing_pic" value="upload">
+                                        <i class="fa fa-lg fa-images"></i>
+                                        <i class="fa fa-lg fa-video"></i>
                                     </div>
                                     <div class="offset-md-7 col-md-3">
                                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
@@ -262,9 +263,9 @@
                 <div class="col-md-8 m-auto">
                     <h1 class="display-4 text-center">Sign Up</h1>
                     <p class="lead text-center">Create your Fishbook account</p>
-                    <form action="/sign_up" method="post">
+                    <form action="create-profile.html">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Name" name="username"
+                            <input type="text" class="form-control form-control-lg" placeholder="Name" name="name"
                                    required />
                         </div>
                         <div class="form-group">

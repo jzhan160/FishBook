@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /*
  * MainController class deals with login and registration activities
@@ -143,19 +146,9 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping(value = "/sign_up",method = RequestMethod.POST)
-    public String sign_up(User user,HttpServletRequest request) {
-        user.setGender("Unknown");
-        user.setCreatetime(new Date());
-        user.setIsadmin(0);
-        user.setImagepath("");
-
-        int id = userService.addUser(user);
-        System.out.println(id);
-        request.getSession().setAttribute(Constants.CURRENT_USER, user);
-
-
-        return "/index";
+    @RequestMapping("/sign_up")
+    public String sign_up() {
+        return "";
     }
 
     @RequestMapping(value = "logout", method = RequestMethod.GET)
