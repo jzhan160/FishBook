@@ -190,17 +190,16 @@
                         <!--<div class="modal-header">-->
                         <!--</div>-->
                         <div class="modal-body">
-                            <form>
+                            <form  enctype="multipart/form-data" method="post" action="/post/submit_post">
                                 <div class="form-group row align-items-center">
                                     <div class="col-md-12">
-                                        <textarea class="form-control" id="feedback" name="feedback" rows="4"
-                                            placeholder="What's happenning?"></textarea>
+                                        <textarea class="form-control" id="content" name="content" rows="4"
+                                                  placeholder="What's happenning?"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group d-flex">
                                     <div class="d-flex justify-content-between col-md-2 mt-2">
-                                        <i class="fa fa-lg fa-images"></i>
-                                        <i class="fa fa-lg fa-video"></i>
+                                        <input  type="file" name="fishing_pic" value="upload">
                                     </div>
                                     <div class="offset-md-7 col-md-3">
                                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
@@ -292,36 +291,21 @@
         crossorigin="anonymous"></script>
  <!--   <script th:src="@{/1.12.4/jquery.min.js}" type="text/javascript"></script>
     <script th:src="@{/layer/layer.js}" type="text/javascript"></script>-->
-
-    <!--<script type="text/javascript">
+   <script type="text/javascript">
         $(function () {
-           /* $("#email,#password").on('focus',function () {
-                $(this).tooltip('destroy').parents('.form-group').removeClass('has-error');;
-            });*/
-            $(document).keydown(function (e) {
-                var event = document.all ? window.event : e;
-                if(event.keyCode === 13){
-                    $("#btn-login").click();
-                }
-            });
+
             $("#btn-login").on('click',function () {
                 var $btn = $(this).button('loading');
                 var email = $.trim($("#email").val());
                 var password = $.trim($("#password").val());
-                /*if(email === ""){
+                if(email === ""){
                     $("#email").tooltip({placement:"auto",title : "Email Is Required",trigger : 'manual'})
                         .tooltip('show')
                         .parents('.form-group').addClass('has-error');
                     $btn.button('reset');
                     return false;
 
-                }else if(password === ""){
-                    $("#password").tooltip({title : 'Password Is Required',trigger : 'manual'})
-                        .tooltip('show')
-                        .parents('.form-group').addClass('has-error');
-                    $btn.button('reset');
-                    return false;
-                }else{*/
+                }else{
                     $.ajax({
                         url : "login",
                         data : $("form").serializeArray(),
@@ -339,11 +323,9 @@
                             $btn.button('reset');
                         }
                     });
-                /*}*/
-                return false;
             });
         });
-    </script>-->
+    </script>
 </body>
 
 </html>
