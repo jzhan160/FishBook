@@ -1,6 +1,6 @@
 package com.se.fishbook.test;
 
-public class JsonResult {
+public class Location {
     private double lat;
     private double lng;
 

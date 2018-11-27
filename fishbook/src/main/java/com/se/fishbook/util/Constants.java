@@ -9,6 +9,8 @@ import java.util.Map;
 public class Constants {
      public static Map<String,String> mapOptions = new HashMap<String,String>();
      public static final String CURRENT_USER = "user";
+    public static final String CURRENT_LOCATION = "location";
+
      public static final String SUCCESS = "success";
      public static final String ERROR = "error";
      

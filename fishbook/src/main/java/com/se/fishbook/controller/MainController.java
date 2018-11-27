@@ -5,6 +5,7 @@ import com.se.fishbook.service.CommentService;
 import com.se.fishbook.service.PostService;
 import com.se.fishbook.service.RelationService;
 import com.se.fishbook.service.UserService;
+import com.se.fishbook.test.Location;
 import com.se.fishbook.util.Constants;
 import com.se.fishbook.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +118,7 @@ public class MainController {
     }*/
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(User user, HttpServletRequest request) {
+    public @ResponseBody Result login(User user, Location location,HttpServletRequest request) {
         System.out.println("==================in the login method===============");
         System.out.println("==================user is " + user);
         UserKey key = new UserKey();
@@ -129,6 +130,9 @@ public class MainController {
         if (user_checked != null) {
             if (user_checked.getPassword().equals(user.getPassword())) {
                 request.getSession().setAttribute(Constants.CURRENT_USER, user_checked);
+                request.getSession().setAttribute(Constants.CURRENT_LOCATION, location);
+
+                System.out.println(location);
                 //System.out.println("user is "+user);
                 // System.out.println("user_checked is "+user_checked);
 
@@ -143,7 +147,8 @@ public class MainController {
         }
         // System.out.println(result.getCode());
         // System.out.println(result.getMsg());
-        return "index";
+        //return "index";
+        return  result;
     }
 
     @RequestMapping("/sign_up")
