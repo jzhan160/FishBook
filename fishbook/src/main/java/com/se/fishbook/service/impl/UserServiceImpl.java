@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void updateUserImage(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
     public Integer addUser(User user) {
         return userMapper.insert(user);
     }

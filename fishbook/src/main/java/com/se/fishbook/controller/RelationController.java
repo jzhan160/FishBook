@@ -22,6 +22,7 @@ public class RelationController {
     private RelationService relationService;
     @Autowired
     private UserService userService;
+
     //click the follow button to follow a user
     @RequestMapping("/follow")
     public String follow(){

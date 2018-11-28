@@ -7,7 +7,9 @@ import com.se.fishbook.service.CommentService;
 import com.se.fishbook.service.NotificationService;
 import com.se.fishbook.service.PostService;
 import com.se.fishbook.service.UserService;
+import com.se.fishbook.test.Location;
 import com.se.fishbook.util.Constants;
+import com.se.fishbook.util.DateUtil;
 import com.se.fishbook.util.FileUtil;
 import com.se.fishbook.util.Result;
 import org.apache.commons.io.FileUtils;
@@ -29,10 +31,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /*
 * AccountController class handles requests about user accounts
@@ -137,47 +136,44 @@ public class AccountController {
 
     //submit a personal image
    @RequestMapping(value="/update_image")
-    public @ResponseBody
-    Result upload(@RequestParam("file")MultipartFile[] files, HttpServletRequest request) {
-       System.out.println("upload personal image");
-        Result result = new Result();
-        try {
-            User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
-            if(files!=null && files.length>=1) {
-                BufferedOutputStream bw = null;
-                try {
-                    String fileName = files[0].getOriginalFilename();
-                    //判断是否有文件(实际生产中要判断是否是音频文件)
-                    if(StringUtils.isNoneBlank(fileName)) {
-                        String name = Constants.SF_FILE_SEPARATOR + user.getUserid()+ FileUtil.getFileType(fileName);
-                        //创建输出文件对象
-                        //String uploadPath = ResourceUtils.getURL("classpath:").getPath()+"\\static\\image\\";
-                       // File outFile = new File(uploadPath + Constants.AVATAR_PATH + name);
-                        File outFile = new File("E:\\JavaWeb\\SpringBoot\\"+name);
-                        //拷贝文件到输出文件对象
-                        FileUtils.copyInputStreamToFile(files[0].getInputStream(), outFile);
+    public String upload(@RequestParam("image")MultipartFile[] files, HttpServletRequest request) {
+       User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
+       String path = "";
+       try {
+           //send the img
+           if(files!=null && files.length>=1) {
+               BufferedOutputStream bw = null;
+               try {
+                   String fileName = files[0].getOriginalFilename();
+                   //判断是否有文件
+                   if(StringUtils.isNoneBlank(fileName)) {
+                       String uploadPath = ResourceUtils.getURL("classpath:").getPath()+"static/image/head/";
+                       String name = Constants.SF_FILE_SEPARATOR + user.getUserid()+"_"+
+                               DateUtil.date2Str(new Date())+
+                               FileUtil.getFileType(fileName);
 
-                        //user.setImagepath("/image/"+Constants.AVATAR_PATH + name);
-                       // memberRepository.save(member);
+                       path = uploadPath+name;
+                       File outFile = new File(path);
+                       FileUtils.copyInputStreamToFile(files[0].getInputStream(), outFile);
+                   }
+               } catch (Exception e) {
+                   e.printStackTrace();
+               } finally {
+                   try {
+                       if(bw!=null) {bw.close();}
+                   } catch (IOException e) {
+                       e.printStackTrace();
+                   }
+               }
+           }
+           //create a new post entry
+          user.setImagepath(path);
+          userService.updateUserImage(user);
 
-                    }
-                    result.setCode(Constants.SUCCESS);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    result.setCode(Constants.ERROR);
-                } finally {
-                    try {
-                        if(bw!=null) {bw.close();}
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.setCode(Constants.ERROR);
-        }
-        return result;
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return "/account/profile";
     }
 
 

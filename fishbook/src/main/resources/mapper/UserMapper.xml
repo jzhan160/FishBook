@@ -245,7 +245,7 @@
       </if>
     </set>
     where UserId = #{userid,jdbcType=INTEGER}
-      and Email = #{email,jdbcType=VARCHAR}
+      OR Email = #{email,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.se.fishbook.model.User" >
     update user
