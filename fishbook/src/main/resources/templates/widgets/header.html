@@ -24,7 +24,7 @@
         </div>
         <!-- Navbar: brand -->
         <div class="mx-auto order-0 order-md-1">
-            <a class="navbar-brand" href="#"> <i class="fas fa-fish"></i> Fishbook </a>
+            <a class="navbar-brand" href="/index"> <i class="fas fa-fish"></i> Fishbook </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbarNavDropdown">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,15 +32,13 @@
         <!-- Navbar: right -->
         <div class="navbar-collapse collapse w-75 order-1 navbarNavDropdown mr-5">
             <ul class="navbar-nav ml-auto" th:if="${session.user}">
+                <li>
+                    <img class="rounded-circle img-thumbnail" src="https://placekitten.com/100/100" style="height:40px; width:40px;" >
+                </li>
                 <li class="nav-item dropdown">
-                    <!--
-                                        <img th:src="${session.user.imagepath}" class="img-circle userbar-avatar">
-                    -->
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false" th:text="${session.user.username}">
-                        Username
                     </a>
-
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/account/profile">Profile</a>
@@ -50,7 +48,7 @@
                     </div>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="notification.html">
+                    <a class="nav-link" href="/account/notification">
                         <i class="fa fa-bell" style="font-size:20px;"></i>
                         <span class="badge badge-notify" style="font-size:13px;">4</span>
                     </a>

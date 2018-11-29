@@ -3,6 +3,16 @@ package com.se.fishbook.test;
 public class Location {
     private double lat;
     private double lng;
+    private int userId;
+    private String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public double getLat() {
         return lat;
@@ -18,6 +28,14 @@ public class Location {
 
     public void setLng(double lng) {
         this.lng = lng;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override

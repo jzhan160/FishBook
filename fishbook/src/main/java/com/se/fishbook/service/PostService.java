@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import java.util.List;
 
 public interface PostService {
+    List<Post> selectAll();
 
     List<Post> postsByUserIds(List<Integer> ids);
 
@@ -13,4 +14,6 @@ public interface PostService {
     Integer addLikesCountByOne(Integer id);
 
     Integer insert(Post post);
+
+    List<Post> selectPostsByLocation(double[] locationLatitude, double[] locationLongitude);
 }

@@ -1,7 +1,11 @@
 package com.se.fishbook.controller;
 
+ import com.se.fishbook.model.Post;
+ import com.se.fishbook.service.PostService;
  import com.se.fishbook.test.Location;
-import org.springframework.stereotype.Controller;
+ import javafx.geometry.Pos;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +20,8 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/map")
 public class MapController {
-
+     @Autowired
+     private PostService postService;
     //direct to the map page
     @RequestMapping("")
     public String map(){
@@ -29,35 +34,16 @@ public class MapController {
     public String search(){
         return "";
     }
+
+
     //get post location
-    //just for test
     @ResponseBody
     @RequestMapping(value = "/getData", method = RequestMethod.POST)
-    public List<Location> getData(Location location) {
+    public List<Post> getData(Location location) {
         System.out.println("==============getData");
-        System.out.println(location);
         List<Location> results = new ArrayList<>();
-        try {
-            /*43.0398832, -76.1330401*/
-            //mock data
-            //we need locations from database
-            Location location1 = new Location();
-            location1.setLat(43.0398765);
-            location1.setLng(-76.1330451);
-            results.add(location1);
-            Location location2 = new Location();
-            location2.setLat(43.0395765);
-            location2.setLng(-76.1334451);
-            results.add(location2);
-
-            Location location3 = new Location();
-            location3.setLat(location.getLat());
-            location3.setLng(location.getLng());
-            results.add( location3);
-        } catch (Exception e) {
-            System.out.println("error");
-        }
-        return results;
+        List<Post> allPosts = postService.selectAll();
+        return allPosts;
     }
 
 

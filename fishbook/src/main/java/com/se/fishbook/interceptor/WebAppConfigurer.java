@@ -15,16 +15,18 @@ public class WebAppConfigurer extends WebMvcConfigurerAdapter {
 
 }*/
 
+/*
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-/*
+
 @Configuration
 public class WebAppConfigurer extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/post/**").addResourceLocations("D:/GitHub/FishBook/fishbook/src/main/resources/static/image");
     }
 
-}*/
+}
+*/

@@ -13,6 +13,7 @@ import com.se.fishbook.util.Result;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +26,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Random;
+import java.util.UUID;
 
 @Controller
-@RequestMapping("/post")
 public class PostController {
 
     @Autowired
@@ -36,13 +38,19 @@ public class PostController {
     @Autowired
     private NotificationService notificationService;
 
+//    @Value("${web.upload.path}")
+//    private String uploadPath = "D:/GitHub/FishBook/fishbook/src/main/resources/static/image/post/";
+
 
     //submit your new post
     @RequestMapping(value="/submit_post")
     public String submitPost(@RequestParam("fishing_pic")MultipartFile[] files, @RequestParam String content, HttpServletRequest request) {
         Result result = new Result();
         User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
+        System.out.println("path:"+request.getServletContext().getContextPath());
+        String uploadPath = request.getServletContext().getRealPath("/")+"post/";
         String path = "";
+        String savedPath = "";
         try {
             //send the img
             if(files!=null && files.length>=1) {
@@ -51,12 +59,13 @@ public class PostController {
                     String fileName = files[0].getOriginalFilename();
                     //判断是否有文件
                     if(StringUtils.isNoneBlank(fileName)) {
-                        String uploadPath = ResourceUtils.getURL("classpath:").getPath()+"static/image/post/";
-                        String name = Constants.SF_FILE_SEPARATOR + user.getUserid()+"_"+
-                                       DateUtil.date2Str(new Date())+
+
+                        String name =  user.getUserid()+"_"+
+                                       DateUtil.date2Str(new Date())+ "_"+ UUID.randomUUID().toString()+
                                        FileUtil.getFileType(fileName);
 
                         path = uploadPath+name;
+                        savedPath = "post/"+name;
                         File outFile = new File(path);
                         FileUtils.copyInputStreamToFile(files[0].getInputStream(), outFile);
                     }
@@ -74,8 +83,8 @@ public class PostController {
             //create a new post entry
             Post post = new Post();
             post.setContent(content);
-            post.setCreatetime(new Date());
-            post.setImagepath(path);
+            post.setCreatetime(DateUtil.getTimestamp());
+            post.setImagepath(savedPath);
             post.setAuthorid(user.getUserid());
             Location location = (Location) request.getSession().getAttribute(Constants.CURRENT_LOCATION);
             post.setLocationlatitude(location.getLat());
@@ -89,7 +98,7 @@ public class PostController {
             e.printStackTrace();
             result.setCode(Constants.ERROR);
         }
-        return "/index";
+        return "redirect:/index";
     }
 
 

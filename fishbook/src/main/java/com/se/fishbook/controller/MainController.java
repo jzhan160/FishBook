@@ -10,6 +10,7 @@ import com.se.fishbook.util.Constants;
 import com.se.fishbook.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,13 +41,16 @@ public class MainController {
     //Personal main page
     @RequestMapping("/index")
     public ModelAndView index(HttpServletRequest request) {
-        System.out.println("in index page");
+         System.out.println("in index page");
         System.out.println("user in session:" + request.getSession().getAttribute(Constants.CURRENT_USER));
         User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
         ModelAndView mv = new ModelAndView();
         if (user != null) {
             System.out.println("==================Loading the post...===============");
-            List<Post> posts = postService.postsByUserIds(relationService.allFollowees(user));
+            //show all posts of the current user and his followees
+            List<Integer> usersToShowPosts = relationService.allFollowees(user);
+            usersToShowPosts.add(user.getUserid());
+            List<Post> posts = postService.postsByUserIds(usersToShowPosts);
 
             System.out.println("==================Total Num:" + posts.size() + "===============");
             Map<Integer, List<Comment>> comments = new HashMap<>();

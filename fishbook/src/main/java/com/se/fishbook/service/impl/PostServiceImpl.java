@@ -29,10 +29,24 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Post> selectPostsByLocation(double[] locationLatitude, double[] locationLongitude) {
+        PostExample example = new PostExample();
+        example.createCriteria().andLocationlatitudeBetween(locationLatitude[0],locationLatitude[1]).andLocationlongitudeBetween(locationLongitude[0],locationLongitude[1]);
+        List<Post> res = postMapper.selectByExample(example);
+        return res;
+    }
+
+    @Override
+    public List<Post> selectAll() {
+        return postMapper.selectByExample(new PostExample());
+    }
+
+    @Override
     public List<Post> postsByUserIds(List<Integer> ids) {
         PostExample post = new PostExample();
         post.createCriteria().andAuthoridIn(ids);
-        post.setOrderByClause("CreateTime");
+        post.setOrderByClause("PostId");
+
         return postMapper.selectByExample(post);
     }
 
@@ -43,4 +57,6 @@ public class PostServiceImpl implements PostService {
         post.setOrderByClause("CreateTime");
         return postMapper.selectByExample(post);
     }
+
+
 }

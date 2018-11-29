@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.se.fishbook.model.Post" >
     <id column="PostId" property="postid" jdbcType="INTEGER" />
     <result column="Content" property="content" jdbcType="VARCHAR" />
-    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="CreateTime" property="createtime" jdbcType="DATE" />
     <result column="ImagePath" property="imagepath" jdbcType="VARCHAR" />
     <result column="AuthorId" property="authorid" jdbcType="INTEGER" />
     <result column="LocationLatitude" property="locationlatitude" jdbcType="DOUBLE" />
@@ -88,7 +88,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null" >
-      order by ${orderByClause}
+      order by ${orderByClause} DESC
     </if>
   </select>
 

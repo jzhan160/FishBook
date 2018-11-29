@@ -1,65 +1,178 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Profile</title>
-    <link th:href="@{/css/personImage.css}" rel="stylesheet">
-<!--    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding:0;
+        }
 
+        .main {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        .left {
+            width: 30%;
+            height: 50%;
+            float: left;
+        }
+
+        .right {
+            width: 70%;
+            height: 50%;
+            float: right;
+        }
+
+        .blue {
+            background-color: #5BC0DE;
+        }
+
+        .green {
+            background-color: #5CB85C;
+        }
+
+        .orange {
+            background-color: #F0AD4E;
+        }
+
+        .yellow {
+            background-color: #FFC706;
+        }
+
+        .box {
+            width: 300px;
+            text-align: center;
+            float: left;
+        }
+
+        .box img {
+            width: 100%;
+            float: left
+        }
+
+        .box_m {
+            width: 300px;
+            text-align: center;
+            float: middle;
+        }
+
+        .box_m img {
+            width: 100%;
+            float: right
+        }
+    </style>
+
 </head>
+
 <body>
-<div class="container">
-     <div class="row">
-        <div class="col-sm-2 imgUp">
-            <div class="imagePreview">
+<div th:replace="/widgets/header :: header"></div>
 
+
+<header class="jumbotron">
+    <div class="container">
+        <div class="row row-header">
+            <div class="col-12 col-md-8">
+                <h1 class="display-4 text-center">Welcome To Fishbook!</h1>
+                <p class="d-none d-md-block text-center">Share your experience with fishing enthusiasts
+                    around the
+                    world.</p>
             </div>
-            <label class="btn btn-primary">
-                Upload<input type="file" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
-            </label>
-        </div><!-- col-2 -->
 
-    </div><!-- row -->
-</div><!-- container -->
+            <div class="col-12 offset-1 col-md-3 align-self-center">
+                <button type="button" class="btn-lg btn-secondary" data-toggle="modal" data-target="#writePost">Write
+                    A Post
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
 
+<div class="left">
+ <div>
+     <img src="@{/image/blank_space.png}" style="height:1px; width:22px;">
+     <img class="rounded-circle img-thumbnail" src="https://placekitten.com/100/100" style="height:240px; width:240px;">
+    </div>
+
+    <div class="box" th:text="${session.user.username}">
+        username
+    </div>
+    <div class="box" th:text="${session.user.createtime}">
+        Joined time
+    </div>
+    <div class="box">
+        <a class="nav-link" href="/relation/followees"> <i class="fas fa-user"></i>
+            Following</a>
+        <a class="nav-link" href="/relation/followers"> <i class="fas fa-user-friends d-none d-lg-inline"></i>
+            Follower</a>
+    </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" ></script>
+<div class="right">
+ <!--   <div class="box_m" style="font-szie:180px;">
+        send your first fish
+    </div>-->
+    <div class="container">
 
-<script type="text/javascript">
+        <div class="row text-center" style="display:flex; flex-wrap: wrap;">
 
-    $(document).on("click", "i.del" , function() {
-        $(this).parent().remove();
-    });
-    $(function() {
-        $(document).on("change",".uploadFile", function()
-        {
-            var uploadFile = $(this);
-            var files = !!this.files ? this.files : [];
-            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+            <div class="col-md-4--middle">
+                <div class="card mx-1 shadow-sm mb-3" style="height: 80%; width: 80%;">
+                    <div class="card-header"><img src="https://placekitten.com/100/100"
+                                                  style="height:30px; width:30px;"> Andy Figiel
+                    </div>
+                    <img class="card-img-bottom"
+                         src="https://s3.amazonaws.com/photos.fishidy.com/5614814166b01a04d00c5e98_800"
+                         data-holder-rendered="true" style="height: 80%; width: 100%;">
+                    <p class="card-caption mt-3">3 lb. Largemouth Bass</p>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between align-items-center mx-1">
+                            <i class="fa fa-comment"></i>
+                            <i class="far fa-thumbs-up"></i>
+                            <i class="fas fa-share-alt-square"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            if (/^image/.test( files[0].type)){ // only image file
-                var reader = new FileReader(); // instance of the FileReader
-                reader.readAsDataURL(files[0]); // read the local file
+            <div class="col-md-8--middle">
+                <div class="card mx-1 shadow-sm mb-3" style="height: 80%; width: 80%;">
+                    <div class="card-header"><img class="mr-1" src="https://placekitten.com/400/400"
+                                                  style="height:30px; width:30px;"> Noah Shapiro
+                    </div>
+                    <img class="card-img-bottom"
+                         src="https://s3.amazonaws.com/photos.fishidy.com/5bc34fdf6e8bb8065848a9d2_800"
+                         data-holder-rendered="true" style="height: 80%; width: 100%;">
+                    <p class="card-caption mt-3">Cutbow Trout with a Lucky Leech</p>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between align-items-center mx-1">
+                            <i class="fa fa-comment"></i>
+                            <i class="far fa-thumbs-up"></i>
+                            <i class="fas fa-share-alt-square"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                reader.onloadend = function(){ // set image data as background of div
-                    //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
-                    uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url("+this.result+")");
-                }
-            }
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 
-        });
-    });
-</script>
 </body>
 </html>
