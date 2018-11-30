@@ -44,7 +44,7 @@ public class CommentController {
         Integer postId = Integer.valueOf(request.getParameter("postId"));
         List<Comment> comments = commentService.selectCommentsByPostId(postId);
         List<CommentDisplay> cd = new ArrayList<>();
-        for(Comment c : comments){
+        for(Comment c : comments) {
             CommentDisplay cc = new CommentDisplay();
             cc.setComment(c);
             UserKey uk = new UserKey();

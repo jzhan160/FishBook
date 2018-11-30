@@ -25,6 +25,7 @@ public class NotificationServiceImpl implements NotificationService {
     public List<Notification> showUnreadNotifications(Integer UserId) {
         NotificationExample ne = new NotificationExample();
         ne.createCriteria().andReceiveridEqualTo(UserId).andViewedEqualTo(new Byte("0"));
+        ne.setOrderByClause("NotificationId DESC");
         return notificationMapper.selectByExample(ne);
     }
 
@@ -32,6 +33,7 @@ public class NotificationServiceImpl implements NotificationService {
     public List<Notification> showReadNotifications(Integer UserId) {
         NotificationExample ne = new NotificationExample();
         ne.createCriteria().andReceiveridEqualTo(UserId).andViewedEqualTo(new Byte("1"));
+        ne.setOrderByClause("NotificationId DESC");
         return notificationMapper.selectByExample(ne);
     }
 

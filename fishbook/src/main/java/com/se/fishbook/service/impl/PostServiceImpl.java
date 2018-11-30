@@ -45,8 +45,7 @@ public class PostServiceImpl implements PostService {
     public List<Post> postsByUserIds(List<Integer> ids) {
         PostExample post = new PostExample();
         post.createCriteria().andAuthoridIn(ids);
-        post.setOrderByClause("PostId");
-
+        post.setOrderByClause("CreateTime");
         return postMapper.selectByExample(post);
     }
 
@@ -58,5 +57,8 @@ public class PostServiceImpl implements PostService {
         return postMapper.selectByExample(post);
     }
 
-
+    @Override
+    public Post selectByPostId(Integer id) {
+        return postMapper.selectByPrimaryKey(id);
+    }
 }

@@ -19,7 +19,7 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> selectCommentsByPostId(Integer postId) {
         CommentExample ce = new CommentExample();
         ce.createCriteria().andPostidEqualTo(postId);
-        ce.setOrderByClause("CreateTime");
+        ce.setOrderByClause("CreateTime DESC");
         return commentMapper.selectByExample(ce);
     }
 

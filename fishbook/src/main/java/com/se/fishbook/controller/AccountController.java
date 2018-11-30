@@ -1,8 +1,5 @@
 package com.se.fishbook.controller;
-import com.se.fishbook.model.Comment;
-import com.se.fishbook.model.Notification;
-import com.se.fishbook.model.Post;
-import com.se.fishbook.model.User;
+import com.se.fishbook.model.*;
 import com.se.fishbook.service.CommentService;
 import com.se.fishbook.service.NotificationService;
 import com.se.fishbook.service.PostService;
@@ -183,15 +180,61 @@ public class AccountController {
         if (user!=null){
             List<Notification> readN = notificationService.showReadNotifications(user.getUserid());
             List<Notification> unreadN = notificationService.showUnreadNotifications(user.getUserid());
+            List<NotificationDisplay> unreaNDs = new LinkedList<>();
+            List<NotificationDisplay> reaNDs = new LinkedList<>();
+            for(Notification n : readN) {
+                NotificationDisplay nd = new NotificationDisplay();
+                eventParser(n, nd);
+                reaNDs.add(nd);
+            }
+            for(Notification n : unreadN){
+                NotificationDisplay nd = new NotificationDisplay();
+                eventParser(n, nd);
+                unreaNDs.add(nd);
+            }
             System.out.println("==================Total Num:"+ unreadN.size() +"===============");
             mv.setViewName("/account/notification");
-            mv.addObject("unreadNotifications", unreadN);
-            mv.addObject("readNotifications", readN);
+            mv.addObject("unreadN", unreaNDs);
+            mv.addObject("readN", reaNDs);
             return mv;
         }
         mv.setViewName("/index");
         return mv;
 
+    }
+
+    private void eventParser(Notification n, NotificationDisplay nd){
+        nd.setNotification(n);
+        String[] event = n.getEvent().split(" ");
+        UserKey k = new UserKey();
+        k.setUserid(n.getTriggerid());
+        User u = userService.selectById(k);
+        nd.setTrigger(u);
+        //String E = event.substring(0,1);
+        switch (event[0]){
+            case "follow":{
+                nd.setText(u.getUsername()+" starts to follow you.");
+                nd.setHasPost(0);
+                break;
+            }
+            case "unfollow":{
+                nd.setText(u.getUsername()+" starts to unfollow you.");
+                nd.setHasPost(0);
+                break;
+            }
+            case "like":{
+                nd.setText(u.getUsername()+" likes your post.");
+                nd.setPost(postService.selectByPostId(Integer.parseInt(event[1])));
+                nd.setHasPost(1);
+                break;
+            }
+            case "comment":{
+                nd.setText(u.getUsername()+" comments on your post.");
+                nd.setPost(postService.selectByPostId(Integer.parseInt(event[1])));
+                nd.setHasPost(1);
+                break;
+            }
+        }
     }
 
 }
