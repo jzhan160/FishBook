@@ -170,6 +170,7 @@ public class AccountController {
     }
 
 
+    //load notifications
     @RequestMapping("/notification")
     public ModelAndView notification(HttpServletRequest request){
         System.out.println("in index page");
@@ -203,6 +204,7 @@ public class AccountController {
 
     }
 
+    //eventParser for notifications
     private void eventParser(Notification n, NotificationDisplay nd){
         nd.setNotification(n);
         String[] event = n.getEvent().split(" ");

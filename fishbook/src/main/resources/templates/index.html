@@ -42,7 +42,7 @@
     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
 
         <!-- Iterations -->
-        <tr th:each="post : ${posts}">
+        <tr th:each="post, postStat: ${posts}">
             <div class="col-md-4">
                 <div class="card mx-1 shadow-sm mb-3">
                     <div class="card-header"><img class="mr-1" th:src="${post.user.imagepath}"
@@ -52,45 +52,22 @@
                          th:src="${post.post.imagepath}"
                          data-holder-rendered="true" style="height: 100%; width: 100%;">
                     <p class="card-caption mt-3" th:text="${post.post.content}"></p>
+
                     <div class="card-footer">
                         <div class="d-flex justify-content-between align-items-center mx-1">
                             <button
+                                    th:name="showComment"
                                     type="button"
                                     class="btn btn-primary"
                                     data-toggle="modal"
                                     data-target="#modal"
+                                    th:value=${post.post.postid}
                             >
                                 <i class="fa fa-comment"></i>
                             </button>
-
                             <i class="far fa-thumbs-up"></i>
                             <i class="fas fa-share-alt-square"></i>
                         </div>
-                    </div>
-                    <!-- Comment List -->
-                    <div class="list-group">
-                        <a
-                                href="#"
-                                class="list-group-item list-group-item-action flex-column"
-                        >
-                            <div class="d-flex flex-column align-items-start">
-                                <h6 class="mb-1">User1</h6>
-                                <p class="mb-1">
-                                    Maecenas sed diam eget risus varius blandit.
-                                </p>
-                                <small class="text-muted">3 days ago</small>
-                            </div>
-                        </a>
-                        <a
-                                href="#"
-                                class="list-group-item list-group-item-action flex-column"
-                        >
-                            <div class="d-flex w-100 flex-column align-items-start">
-                                <h6 class="mb-1">User2</h6>
-                                <p class="mb-1">This is a comment</p>
-                                <small class="text-muted">4 days ago</small>
-                            </div>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -109,9 +86,8 @@
                 <div class="modal-content">
                     <div class="modal-header"><!-- Avartar --></div>
                     <div class="modal-body">
-                        <form>
-                            <div class="form-group row align-items-center">
-                                <div class="col-md-12">
+                        <div class="form-group row align-items-center">
+                            <div class="col-md-12">
                       <textarea
                               class="form-control"
                               id="feedback"
@@ -119,27 +95,44 @@
                               rows="4"
                               placeholder="Make a comment"
                       ></textarea>
-                                </div>
                             </div>
-                            <div class="form-group d-flex">
-                                <div class="d-flex offset-8">
-                                    <button
-                                            type="button"
-                                            class="btn btn-secondary btn-sm mr-2"
-                                            data-dismiss="modal"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button type="submit" class="btn btn-primary btn-sm">
-                                        Submit
-                                    </button>
-                                </div>
+                        </div>
+                        <div class="form-group d-flex">
+                            <div class="d-flex offset-8">
+                                <button
+                                        type="button"
+                                        class="btn btn-secondary btn-sm mr-2"
+                                        data-dismiss="modal"
+                                >
+                                    Cancel
+                                </button>
+                                <button id = "submitComment" class="btn btn-primary btn-sm">
+                                    Submit
+                                </button>
                             </div>
-                        </form>
+                        </div>
+
                     </div>
+                    <!-- Comment List -->
+
+                    <div id="commentList">
+                        <div class="list-group-item list-group-item-action flex-column">
+                            <div class="d-flex flex-column align-items-start">
+                                <h6 class="mb-1">Null</h6>
+                                <p class="mb-1">
+                                    No comment here.
+                                </p>
+                                <small class="text-muted">3 days ago</small>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
+
+
         <!-- Row - writePost -->
         <div id="writePost" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg" role="content">
@@ -362,6 +355,75 @@
 
 
 </script>
+
+<!-- Script for comment -->
+<!-- Show comments -->
+<script>
+    var curPostId;
+    $(document).ready(function () {
+        //"btn btn-primary"
+        $('button[name = showComment]').each(function () {
+            $(this).click(function () {
+                curPostId = $(this).val();
+                $.ajax({
+                    url: "/comment/showComment",
+                    data: {"postId": $(this).val()},
+                    success: function (result) {
+                        var re = result;
+                        $("#commentList").children().remove();
+                        //$("#div1").html(re[0].comment.content);
+                        $.each(re, function (i, val) {
+                            var p = $("<p></p>").text(val.comment.content).addClass("mb-1");
+                            var h6 = $("<h6></h6>").text(val.user.username).addClass("mb-1");
+                            var div1 = $("<div></div>").addClass("d-flex flex-column align-items-start");
+                            var small = $("<small></small>").text(val.comment.createtime).addClass("text-muted");
+                            div1.append(h6);
+                            div1.append(p);
+                            div1.append(small);
+                            var div2 = $("<div></div>").addClass("list-group-item list-group-item-action flex-column");
+                            div2.append(div1);
+
+                            $("#commentList").append(div2);
+                        });
+                    }
+                });
+            });
+        });
+
+    });
+</script>
+
+<!-- Submit comment -->
+<script>
+    $(document).ready(function () {
+        $("#submitComment").click(function () {
+            $.ajax({
+                url: "/comment/submitcomment",
+                data: {"postId": curPostId, "content": $("#feedback").val()},
+                success: function (result) {
+                    var re = result;
+                    $("#commentList").children().remove();
+                    //$("#div1").html(re[0].comment.content);
+                    $.each(re, function (i, val) {
+                        var p = $("<p></p>").text(val.comment.content).addClass("mb-1");
+                        var h6 = $("<h6></h6>").text(val.user.username).addClass("mb-1");
+                        var div1 = $("<div></div>").addClass("d-flex flex-column align-items-start");
+                        var small = $("<small></small>").text(val.comment.createtime).addClass("text-muted");
+                        div1.append(h6);
+                        div1.append(p);
+                        div1.append(small);
+                        var div2 = $("<div></div>").addClass("list-group-item list-group-item-action flex-column");
+                        div2.append(div1);
+                        $("#commentList").append(div2);
+                    });
+                    $("#feedback").val("").focus();
+                }
+            });
+        });
+    });
+
+</script>
+
 </body>
 
 </html>
