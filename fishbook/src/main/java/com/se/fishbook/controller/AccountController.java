@@ -186,11 +186,37 @@ public class AccountController {
             for(Notification n : readN) {
                 NotificationDisplay nd = new NotificationDisplay();
                 eventParser(n, nd);
+                List<CommentDisplay> cds = new LinkedList<>();
+                if(nd.getHasPost() != 0){
+                    List<Comment> cs = commentService.selectCommentsByPostId(nd.getPost().getPostid());
+                    for(Comment c: cs){
+                        CommentDisplay cd = new CommentDisplay();
+                        UserKey uk = new UserKey();
+                        uk.setUserid(c.getAuthorid());
+                        cd.setUser(userService.selectById(uk));
+                        cd.setComment(c);
+                        cds.add(cd);
+                    }
+                }
+                nd.setComments(cds);
                 reaNDs.add(nd);
             }
             for(Notification n : unreadN){
                 NotificationDisplay nd = new NotificationDisplay();
                 eventParser(n, nd);
+                List<CommentDisplay> cds = new LinkedList<>();
+                if(nd.getHasPost() != 0){
+                    List<Comment> cs = commentService.selectCommentsByPostId(nd.getPost().getPostid());
+                    for(Comment c: cs){
+                        CommentDisplay cd = new CommentDisplay();
+                        UserKey uk = new UserKey();
+                        uk.setUserid(c.getAuthorid());
+                        cd.setUser(userService.selectById(uk));
+                        cd.setComment(c);
+                        cds.add(cd);
+                    }
+                }
+                nd.setComments(cds);
                 unreaNDs.add(nd);
             }
             System.out.println("==================Total Num:"+ unreadN.size() +"===============");
@@ -215,23 +241,23 @@ public class AccountController {
         //String E = event.substring(0,1);
         switch (event[0]){
             case "follow":{
-                nd.setText(u.getUsername()+" starts to follow you.");
+                nd.setText(u.getUsername()+" started following you.");
                 nd.setHasPost(0);
                 break;
             }
             case "unfollow":{
-                nd.setText(u.getUsername()+" starts to unfollow you.");
+                nd.setText(u.getUsername()+" started unfollowing you.");
                 nd.setHasPost(0);
                 break;
             }
             case "like":{
-                nd.setText(u.getUsername()+" likes your post.");
+                nd.setText(u.getUsername()+" liked your post.");
                 nd.setPost(postService.selectByPostId(Integer.parseInt(event[1])));
                 nd.setHasPost(1);
                 break;
             }
             case "comment":{
-                nd.setText(u.getUsername()+" comments on your post.");
+                nd.setText(u.getUsername()+" commented on your post.");
                 nd.setPost(postService.selectByPostId(Integer.parseInt(event[1])));
                 nd.setHasPost(1);
                 break;

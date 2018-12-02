@@ -109,7 +109,20 @@ public class PostController {
         Integer postId = Integer.valueOf(request.getParameter("postId"));
         Integer val = postService.addLikesCountByOne(postId);
         User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
+        //if(postService.selectByPostId(postId).getAuthorid() != user.getUserid())
         notificationService.newLikes(postId, user.getUserid());
         return val;
     }
+
+    @RequestMapping("/removeLikes")
+    @ResponseBody
+    public Integer removeLikes(HttpServletRequest request){
+        Integer postId = Integer.valueOf(request.getParameter("postId"));
+        Integer val = postService.removeLikesCountByOne(postId);
+        User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
+        //if(postService.selectByPostId(postId).getAuthorid() != user.getUserid())
+        notificationService.newLikes(postId, user.getUserid());
+        return val;
+    }
+
 }

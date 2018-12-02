@@ -1,11 +1,22 @@
 package com.se.fishbook.model;
 
+import java.util.List;
+
 public class NotificationDisplay {
+    private List<CommentDisplay> comments;
     private Post post;
     private Notification notification;
     private User trigger;
     private String text;
     private int hasPost = 0;
+
+    public List<CommentDisplay> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentDisplay> comments) {
+        this.comments = comments;
+    }
 
     public int getHasPost() {
         return hasPost;

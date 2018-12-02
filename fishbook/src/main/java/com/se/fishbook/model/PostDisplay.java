@@ -4,6 +4,7 @@ import java.util.List;
 
 public class PostDisplay {
     private Post post;
+    private Integer commentCount = 0;
     private User user;
 //    private List<CommentDisplay> cd;
 //
@@ -14,6 +15,14 @@ public class PostDisplay {
 //    public void setCd(List<CommentDisplay> cd) {
 //        this.cd = cd;
 //    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
 
     public User getUser() {
         return user;

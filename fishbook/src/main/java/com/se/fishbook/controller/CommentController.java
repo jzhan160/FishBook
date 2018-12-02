@@ -1,10 +1,9 @@
 package com.se.fishbook.controller;
 
-import com.se.fishbook.model.Comment;
-import com.se.fishbook.model.CommentDisplay;
-import com.se.fishbook.model.User;
-import com.se.fishbook.model.UserKey;
+import com.se.fishbook.model.*;
 import com.se.fishbook.service.CommentService;
+import com.se.fishbook.service.NotificationService;
+import com.se.fishbook.service.PostService;
 import com.se.fishbook.service.UserService;
 import com.se.fishbook.util.Constants;
 import com.se.fishbook.util.DateUtil;
@@ -26,6 +25,12 @@ public class CommentController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PostService postService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     //direct to the page where you can start a new comment
     @RequestMapping("")
@@ -59,6 +64,8 @@ public class CommentController {
             cc.setUser(userService.selectById(uk));
             cd.add(cc);
         }
+        //if(postService.selectByPostId(postId).getAuthorid() != user.getUserid())
+        notificationService.newComments(postId, user.getUserid());
         return cd;
     }
 

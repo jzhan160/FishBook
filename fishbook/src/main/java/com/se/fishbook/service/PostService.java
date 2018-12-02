@@ -13,9 +13,13 @@ public interface PostService {
 
     Integer addLikesCountByOne(Integer id);
 
+    Integer removeLikesCountByOne(Integer id);
+
     Integer insert(Post post);
 
     List<Post> selectPostsByLocation(double[] locationLatitude, double[] locationLongitude);
 
     Post selectByPostId(Integer id);
+
+
 }

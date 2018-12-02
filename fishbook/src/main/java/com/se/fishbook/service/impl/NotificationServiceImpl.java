@@ -40,8 +40,9 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void newLikes(Integer postId, Integer userId) {
         Notification n = new Notification();
-        n.setEvent("Like");
+        n.setEvent("like " + postId);
         n.setTriggerid(userId);
+        n.setViewed(new Byte("0"));
         n.setReceiverid(postMapper.selectByPrimaryKey(postId).getAuthorid());
         notificationMapper.insert(n);
     }
@@ -49,9 +50,11 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void newComments(Integer postId, Integer userId) {
         Notification n = new Notification();
-        n.setEvent("Comment");
+        n.setEvent("comment " + postId);
         n.setTriggerid(userId);
         n.setReceiverid(postMapper.selectByPrimaryKey(postId).getAuthorid());
+        n.setViewed(new Byte("0"));
+        System.out.println(n.getEvent());
         notificationMapper.insert(n);
     }
 }

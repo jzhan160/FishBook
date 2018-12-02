@@ -56,17 +56,32 @@
                     <div class="card-footer">
                         <div class="d-flex justify-content-between align-items-center mx-1">
                             <button
-                                    th:name="showComment"
+                                    name="showComment"
                                     type="button"
                                     class="btn btn-primary"
                                     data-toggle="modal"
                                     data-target="#modal"
                                     th:value=${post.post.postid}
                             >
-                                <i class="fa fa-comment"></i>
+                                <i class="fa fa-comment" th:text="${post.commentCount}"></i>
                             </button>
-                            <i class="far fa-thumbs-up"></i>
-                            <i class="fas fa-share-alt-square"></i>
+
+                            <button
+                                    name="like"
+                                    type="button"
+                                    class="btn btn-primary"
+                                    th:value=${post.post.postid}
+                            >
+                                <i class="far fa-thumbs-up" th:text="${post.post.likecount}"></i>
+                            </button>
+
+                            <button
+                                    type="button"
+                                    class="btn btn-primary"
+                            >
+                                <i class="fas fa-share-alt-square"></i>
+                            </button>
+
                         </div>
                     </div>
                 </div>
@@ -106,7 +121,7 @@
                                 >
                                     Cancel
                                 </button>
-                                <button id = "submitComment" class="btn btn-primary btn-sm">
+                                <button id="submitComment" class="btn btn-primary btn-sm">
                                     Submit
                                 </button>
                             </div>
@@ -131,7 +146,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Row - writePost -->
         <div id="writePost" class="modal fade" role="dialog">
@@ -422,6 +436,41 @@
         });
     });
 
+</script>
+
+
+<!-- like and dislike -->
+<script>
+    $(document).ready(function(){
+        $('button[name = like]').each(function () {
+            var t = $($(this).children().get(0));
+            if(t.text() == 0)
+                t.text('likes');
+            $(this).click(function (){
+                if(t.hasClass('far')){
+                    t.removeClass('far').addClass('fa');
+                    $.ajax({
+                        url: "/addLikes",
+                        data: {"postId": $(this).val()},
+                        success: function (result) {
+                            var re = result;
+                            t.text(re);
+                        }
+                    });
+                }else{
+                    t.removeClass('fa').addClass('far');
+                    $.ajax({
+                        url: "/removeLikes",
+                        data: {"postId": $(this).val()},
+                        success: function (result) {
+                            var re = result;
+                            t.text(re);
+                        }
+                    });
+                }
+            })
+        })
+    });
 </script>
 
 </body>

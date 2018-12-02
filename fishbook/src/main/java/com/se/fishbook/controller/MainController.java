@@ -61,6 +61,7 @@ public class MainController {
                 User author  = userService.selectById(key);
                 pd.setPost(post);
                 pd.setUser(author);
+                pd.setCommentCount(commentService.commentCountByPostId(post.getPostid()));
                 postDisplays.add(pd);
             }
             System.out.println("==================Total Num:"+ posts.size() +"===============");

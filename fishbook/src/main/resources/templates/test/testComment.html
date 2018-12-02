@@ -52,6 +52,58 @@
         </div>
     </div>
 
+<button
+        name="like"
+        type="button"
+        class="btn btn-primary"
+        value = "1"
+>
+    <i class="far fa-thumbs-up" value = "1">0</i>
+</button>
+
+<button
+        name="like"
+        type="button"
+        class="btn btn-primary"
+        value = "2"
+>
+    <i class="fa fa-thumbs-up" value = "1">0</i>
+</button>
+
+
+
+<script>
+    $(document).ready(function(){
+        $('button[name = like]').each(function () {
+            var t = $($(this).children().get(0));
+            if(t.text() == 0)
+                t.text('likes');
+            $(this).click(function (){
+                if(t.hasClass('far')){
+                    t.removeClass('far').addClass('fa');
+                    $.ajax({
+                        url: "/addLikes",
+                        data: {"postId": $(this).val()},
+                        success: function (result) {
+                            var re = result;
+                            t.text(re);
+                        }
+                    });
+                }else{
+                    t.removeClass('fa').addClass('far');
+                    $.ajax({
+                        url: "/removeLikes",
+                        data: {"postId": 1},
+                        success: function (result) {
+                            var re = result;
+                            t.text(re);
+                        }
+                    });
+                }
+                    })
+        })
+    });
+</script>
 
 <script>
     $(document).ready(function () {

@@ -24,6 +24,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Integer commentCountByPostId(Integer postId) {
+        CommentExample ce = new CommentExample();
+        ce.createCriteria().andPostidEqualTo(postId);
+        return commentMapper.selectByExample(ce).size();
+    }
+
+    @Override
     public void addComment(Comment comment) {
         commentMapper.insert(comment);
     }
