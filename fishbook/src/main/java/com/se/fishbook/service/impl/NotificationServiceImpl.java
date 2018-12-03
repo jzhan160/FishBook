@@ -57,4 +57,26 @@ public class NotificationServiceImpl implements NotificationService {
         System.out.println(n.getEvent());
         notificationMapper.insert(n);
     }
+
+    @Override
+    public void newFollow(Integer userId, Integer receiverId) {
+        Notification n = new Notification();
+        n.setEvent("follow");
+        n.setTriggerid(userId);
+        n.setReceiverid(receiverId);
+        n.setViewed(new Byte("0"));
+        System.out.println(n.getEvent());
+        notificationMapper.insert(n);
+    }
+
+    @Override
+    public void newUnfollow(Integer userId, Integer receiverId) {
+        Notification n = new Notification();
+        n.setEvent("unfollow");
+        n.setTriggerid(userId);
+        n.setReceiverid(receiverId);
+        n.setViewed(new Byte("0"));
+        System.out.println(n.getEvent());
+        notificationMapper.insert(n);
+    }
 }

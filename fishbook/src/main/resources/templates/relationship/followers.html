@@ -33,7 +33,7 @@
               <div class="card card-body bg-light mb-5 ml-5 col-5">
                   <div class="row">
                       <div class="col-md-5">
-                          <img class="rounded-circle img-thumbnail" src="https://s3.amazonaws.com/photos.fishidy.com/59ccc0013e8f071088c245c9_800"
+                          <img class="rounded-circle img-thumbnail" th:src=${follower.imagepath}
                                alt="" />
                       </div>
                       <div class="col-md-7">
@@ -44,13 +44,14 @@
                           <!--<address class="small">Syracuse, NY</address>
                           <p class="d-none d-lg-block">Love to fish both fresh and salt. Looking for fishing buddies
                               in Syracuse</p>   -->
-
                           <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                               <div class="btn-group mr-2" role="group" aria-label="First group">
                                   <button type="button" class="btn btn-secondary">View Profile</button>
                               </div>
                               <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                  <button type="button" class="btn btn-secondary">Follow</button>
+                                  <button type="button" class="btn btn-secondary"
+                                          th:onclick="'follow('+ ${follower.userid} +')'"
+                                  >Follow</button>
                               </div>
                           </div>
                       </div>
@@ -64,7 +65,12 @@
   </div>
 
 
-
+  <script language=javascript>
+      function follow(userid){
+          var url = "/relation/follow?followerId=" + userid;
+          window.open(url);
+      }
+  </script>
 
 
 

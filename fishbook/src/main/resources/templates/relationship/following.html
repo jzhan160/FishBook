@@ -3,77 +3,95 @@
 
 <head>
     <title>Fishbook</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
     <link th:href="@{/css/main.css}" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
           crossorigin="anonymous">
 </head>
 
 <body>
 
-    <!-- Navbar -->
-    <div th:replace="/widgets/header :: header"></div>
+<!-- Navbar -->
+<div th:replace="/widgets/header :: header"></div>
 
-    <!-- Jumbotron -->
-    <header class="jumbotron">
-        <div class="container">
-            <div class="row row-header">
-                <div class="col-12 ">
-                    <h1 class="display-4 text-center">You are following them!</h1>
-                </div>
+<!-- Jumbotron -->
+<header class="jumbotron">
+    <div class="container">
+        <div class="row row-header">
+            <div class="col-12 ">
+                <h1 class="display-4 text-center">You are following them!</h1>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <div class="container manual-body">
-        <div class="followees" th:each="folowee:${followees}">
-            <div class="row">
-                <div class="card card-body bg-light mb-5 ml-5 col-5">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <img class="rounded-circle img-thumbnail" src="https://s3.amazonaws.com/photos.fishidy.com/59ccc0013e8f071088c245c9_800"
-                                 alt="" />
-                        </div>
-                        <div class="col-md-7">
-                            <br/>
-                            <br/>
+<div class="container manual-body">
+    <div class="followees" th:each="followee:${followees}">
+        <div class="row">
+            <div class="card card-body bg-light mb-5 ml-5 col-5">
+                <div class="row">
+                    <div class="col-md-5">
+                        <img class="rounded-circle img-thumbnail" th:src=${followee.imagepath}
+                             alt=""/>
+                    </div>
+                    <div class="col-md-7">
+                        <br/>
+                        <br/>
 
-                            <h4 th:text="${folowee.username}">name</h4>
-                            <!--<address class="small">Syracuse, NY</address>
-                            <p class="d-none d-lg-block">Love to fish both fresh and salt. Looking for fishing buddies
-                                in Syracuse</p>-->
+                        <h4 th:text="${followee.username}">name</h4>
+                        <!--<address class="small">Syracuse, NY</address>
+                        <p class="d-none d-lg-block">Love to fish both fresh and salt. Looking for fishing buddies
+                            in Syracuse</p>-->
 
-                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group mr-2" role="group" aria-label="First group">
-                                    <button type="button" class="btn btn-secondary">View Profile</button>
-                                </div>
-                                <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                    <button type="button" class="btn btn-secondary">UnFollow</button>
-                                </div>
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <button type="button" class="btn btn-secondary">View Profile</button>
+                            </div>
+
+                            <div class="btn-group mr-2" role="group" aria-label="Second group">
+
+                                <button type="button" class="btn btn-secondary"
+                                        th:onclick="'unfollow('+ ${followee.userid} +')'"
+                                >UnFollow
+                                </button>
+
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
+
+
         </div>
     </div>
+</div>
 
 
-
-
-    <!-- Footer  -->
-    <footer class="bg-dark text-white mt-5 p-4 text-center">
-        Copyright &copy; 2018 Fishbook
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+<!-- Footer  -->
+<footer class="bg-dark text-white mt-5 p-4 text-center">
+    Copyright &copy; 2018 Fishbook
+</footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+
+<script language=javascript>
+    function unfollow(userid){
+        var url = "/relation/unfollow?followeeid=" + userid;
+        window.open(url);
+    }
+</script>
+
+
 </body>
 
 </html>

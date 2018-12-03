@@ -20,13 +20,14 @@
 
         <!-- Unread Notifications-->
         <tr th:each="readN, readNStat: ${unreadN}">
-            <div href="#" class="list-group-item list-group-item-action flex-column border-primary align-items-start my-3 ">
+            <div href="#"
+                 class="list-group-item list-group-item-action flex-column border-primary align-items-start my-3 ">
                 <div class="d-flex w-100 justify-content-between mb-1">
                     <h6 class="mb-1">
-                        <img class="mr-1" src="https://placekitten.com/400/400" style="height:30px; width:30px;"
+                        <img class="mr-1" th:src=${readN.trigger.imagepath} style="height:30px; width:30px;"
                              th:text=${readN.trigger.username}>
                     </h6>
-                    <small th:text = "${readNStat.index}*5 + ' minutes ago (unread)'"> </small>
+                    <small th:text="${readNStat.index}*3 + ' minutes ago (unread)'"></small>
                 </div>
                 <p th:text=${readN.text}></p>
 
@@ -37,13 +38,15 @@
 
             </div>
 
-            <div th:if=" ${readN.hasPost} eq 1" class="modal fade" th:id="'unread'+${readNStat.index}" tabindex="-1" role="dialog"
+            <div th:if=" ${readN.hasPost} eq 1" class="modal fade" th:id="'unread'+${readNStat.index}" tabindex="-1"
+                 role="dialog"
                  aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">
-                                <img src="https://placekitten.com/100/100" style="height:30px; width:30px;" th:text=${session.user.username}/> </h5>
+                                <img th:src=${session.user.imagepath} style="height:30px; width:30px;"
+                                     th:text=${session.user.username}/></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -51,18 +54,21 @@
 
                         <div class="modal-body">
                             <!-- Post Image -->
-                            <img class="card-img-bottom" src="https://s3.amazonaws.com/photos.fishidy.com/5614814166b01a04d00c5e98_800" data-holder-rendered="true"
-                                 style="height: 100%; width: 100%;" />
+                            <img class="card-img-bottom"
+                                 th:src=${readN.post.imagepath}
+                                 data-holder-rendered="true"
+                                 style="height: 100%; width: 100%;"/>
                             <!-- Post Description -->
-                            <p class="card-caption mt-3"  th:text=${readN.post.content}>3 lb. Largemouth Bass</p>
+                            <p class="card-caption mt-3" th:text=${readN.post.content}>3 lb. Largemouth Bass</p>
                             <!-- Comment, Likes, Share -->
                             <div class="d-flex justify-content-between align-items-center mx-1">
 
-                                <a class="btn btn-primary" name = "showComment"
-                                   data-toggle="collapse" href="#commentList"
-                                   role="button" aria-expanded="false">
+                                <button class="btn btn-primary" name="showComment"
+                                        data-toggle="collapse" th:href="'#commentGList' +  ${readNStat.index}"
+                                        th:onclick= "'showComment('+ ${readN.post.postid} + ','+ ${readNStat.index} + ')'"
+                                        role="button" aria-expanded="false">
                                     <i class="fa fa-comment"></i>
-                                </a>
+                                </button>
 
                                 <a class="btn">
                                     <i class="fas fa-thumbs-up" th:text=${readN.post.likecount}> </i>
@@ -76,76 +82,78 @@
 
                         <div class="row">
                             <div class="col">
-                                <div class="collapse multi-collapse" id="commentList">
+                                <div class="collapse multi-collapse" th:id="'commentGList' +  ${readNStat.index}">
                                     <div class="list-group">
                                         <!-- Comment Form -->
                                         <a class="list-group-item list-group-item-action flex-column">
-                                            <form>
                                                 <div class="form-group row align-items-center">
                                                     <div class="col-md-12">
-                                                        <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Make a comment"></textarea>
+                                                        <textarea class="form-control"
+                                                                  th:id="'feedback' + ${readNStat.index}"
+                                                                  name="feedback" rows="4"
+                                                                  placeholder="Make a comment"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group d-flex">
                                                     <div>
-                                                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                                                        <button type="button" class="btn btn-secondary btn-sm"
+                                                                data-dismiss="modal">
                                                             Cancel
                                                         </button>
-                                                        <button type="submit" name = "" class="btn btn-primary btn-sm">
+                                                        <button type="submit" name="submitComment"
+                                                                th:onclick = "'submitComment('+ ${readN.post.postid} + ','+ ${readNStat.index} + ')'"
+                                                                class="btn btn-primary btn-sm">
                                                             Submit
                                                         </button>
                                                     </div>
                                                 </div>
-                                            </form>
                                         </a>
 
                                         <!-- Comments -->
-                                        <a th:each="comment: ${readN.comments}"
-                                           class="list-group-item list-group-item-action flex-column">
-                                            <div class="d-flex flex-column align-items-start">
-                                                <h6 class="mb-1" th:text=${comment.user.username}>User1</h6>
-                                                <p class="mb-1" th:text=${comment.comment.content}>
-                                                    Maecenas sed diam eget risus varius blandit.
-                                                </p>
-                                                <small class="text-muted" th:text=${comment.comment.createtime}>3 days ago</small>
-                                            </div>
-                                        </a>
+                                        <div th:id="'commentList' + ${readNStat.index}">
+
+                                        </div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </tr>
 
+
         <!-- Read Notifications-->
         <tr th:each="readN, readNStat: ${readN}">
-            <div href="#" class="list-group-item list-group-item-action flex-column align-items-start my-3 ">
+            <div href="#"
+                 class="list-group-item list-group-item-action flex-column align-items-start my-3 ">
                 <div class="d-flex w-100 justify-content-between mb-1">
                     <h6 class="mb-1">
                         <img class="mr-1" src="https://placekitten.com/400/400" style="height:30px; width:30px;"
                              th:text=${readN.trigger.username}>
                     </h6>
-                    <small th:text = "${readNStat.index}*5 + ' minutes ago (unread)'"> </small>
+                    <small th:text="${readNStat.index}*5 + ' minutes ago (unread)'"></small>
                 </div>
                 <p th:text=${readN.text}></p>
 
                 <button th:if=" ${readN.hasPost} eq 1" type="button" class="btn btn-outline-info"
                         data-toggle="modal"
-                        th:data-target="'#read'+${readNStat.index}" th:text=${readN.post.content}>
+                        th:data-target="'#unread'+${readNStat.index}" th:text=${readN.post.content}>
                 </button>
 
             </div>
 
-            <div th:if=" ${readN.hasPost} eq 1" class="modal fade" th:id="'read'+${readNStat.index}" tabindex="-1" role="dialog"
+            <div th:if=" ${readN.hasPost} eq 1" class="modal fade" th:id="'unread'+${readNStat.index}" tabindex="-1"
+                 role="dialog"
                  aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModal">
-                                <img src="https://placekitten.com/100/100" style="height:30px; width:30px;" th:text=${session.user.username}/> </h5>
+                            <h5 class="modal-title" id="aaexampleModalLongTitle">
+                                <img th:src=${session.user.imagepath} style="height:30px; width:30px;"
+                                     th:text=${session.user.username}/></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -153,18 +161,21 @@
 
                         <div class="modal-body">
                             <!-- Post Image -->
-                            <img class="card-img-bottom" src="https://s3.amazonaws.com/photos.fishidy.com/5614814166b01a04d00c5e98_800" data-holder-rendered="true"
-                                 style="height: 100%; width: 100%;" />
+                            <img class="card-img-bottom"
+                                 th:src=${readN.post.imagepath}
+                                 data-holder-rendered="true"
+                                 style="height: 100%; width: 100%;"/>
                             <!-- Post Description -->
-                            <p class="card-caption mt-3"  th:text=${readN.post.content}>3 lb. Largemouth Bass</p>
+                            <p class="card-caption mt-3" th:text=${readN.post.content}>3 lb. Largemouth Bass</p>
                             <!-- Comment, Likes, Share -->
                             <div class="d-flex justify-content-between align-items-center mx-1">
 
-                                <a class="btn btn-primary" name = "showComment"
-                                   data-toggle="collapse" href="#commentList"
-                                   role="button" aria-expanded="false">
+                                <button class="btn btn-primary" name="showComment"
+                                        data-toggle="collapse" th:href="'#commentList' +  ${readNStat.index}"
+                                        th:value=${readN.post.postid}
+                                        role="button" aria-expanded="false">
                                     <i class="fa fa-comment"></i>
-                                </a>
+                                </button>
 
                                 <a class="btn">
                                     <i class="fas fa-thumbs-up" th:text=${readN.post.likecount}> </i>
@@ -178,45 +189,49 @@
 
                         <div class="row">
                             <div class="col">
-                                <div class="collapse multi-collapse" id="commentList">
+                                <div class="collapse multi-collapse" th:id="'commentList' +  ${readNStat.index}">
                                     <div class="list-group">
                                         <!-- Comment Form -->
                                         <a class="list-group-item list-group-item-action flex-column">
-                                            <form>
-                                                <div class="form-group row align-items-center">
-                                                    <div class="col-md-12">
-                                                        <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Make a comment"></textarea>
-                                                    </div>
+                                            <div class="form-group row align-items-center">
+                                                <div class="col-md-12">
+                                                        <textarea class="form-control"
+                                                                  th:id="'feedback' + ${readN.post.postid}"
+                                                                  name="feedback" rows="4"
+                                                                  placeholder="Make a comment"></textarea>
                                                 </div>
-                                                <div class="form-group d-flex">
-                                                    <div>
-                                                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
-                                                            Cancel
-                                                        </button>
-                                                        <button type="submit" name = "" class="btn btn-primary btn-sm">
-                                                            Submit
-                                                        </button>
-                                                    </div>
+                                            </div>
+                                            <div class="form-group d-flex">
+                                                <div>
+                                                    <button type="button" class="btn btn-secondary btn-sm"
+                                                            data-dismiss="modal">
+                                                        Cancel
+                                                    </button>
+                                                    <button type="submit" name="submitComment"
+                                                            class="btn btn-primary btn-sm">
+                                                        Submit
+                                                    </button>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </a>
 
                                         <!-- Comments -->
-                                        <a th:each="comment: ${readN.comments}"
-                                           class="list-group-item list-group-item-action flex-column">
-                                            <div class="d-flex flex-column align-items-start">
-                                                <h6 class="mb-1" th:text=${comment.user.username}>User1</h6>
-                                                <p class="mb-1" th:text=${comment.comment.content}>
-                                                    Maecenas sed diam eget risus varius blandit.
-                                                </p>
-                                                <small class="text-muted" th:text=${comment.comment.createtime}>3 days ago</small>
+                                        <div th:id="'commentList' + ${readN.post.postid}">
+                                            <div class="list-group-item list-group-item-action flex-column">
+                                                <div class="d-flex flex-column align-items-start">
+                                                    <h6 class="mb-1"></h6>
+                                                    <p class="mb-1">
+                                                    </p>
+                                                    <small class="text-muted">3 days ago</small>
+                                                </div>
                                             </div>
-                                        </a>
+                                        </div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -306,9 +321,131 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+<script th:src="@{/1.12.4/jquery.min.js}" type="text/javascript"></script>
+<script th:src="@{/layer/layer.js}" type="text/javascript"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}" type="text/javascript"></script>
 
 
+<!-- Script for comment -->
+<!-- Show comments -->
+<script>
+    function showComment(postid, listId){
+        $.ajax({
+            url: "/comment/showComment",
+            data: {"postId": postid},
+            success: function (result) {
+                var re = result;
+                var search = "#commentList" + listId;
+                $(search).children().remove();
+                $.each(re, function (i, val) {
+                    var p = $("<p></p>").text(val.comment.content).addClass("mb-1");
+                    var h6 = $("<h6></h6>").text(val.user.username).addClass("mb-1");
+                    var div1 = $("<div></div>").addClass("d-flex flex-column align-items-start");
+                    var small = $("<small></small>").text(val.comment.createtime).addClass("text-muted");
+                    div1.append(h6);
+                    div1.append(p);
+                    div1.append(small);
+                    var div2 = $("<div></div>").addClass("list-group-item list-group-item-action flex-column");
+                    div2.append(div1);
+                    $(search).append(div2);
+                });
+            }
+        });
+    }
 
+    $(document).ready(function () {
+        // $('button[name = showComment]').each(function () {
+        //     var curPostid = $(this).val();
+        //     $(this).click(function () {
+        //         $.ajax({
+        //             url: "/comment/showComment",
+        //             data: {"postId": curPostid},
+        //             success: function (result) {
+        //                 var re = result;
+        //                 var search = "#commentList" + curPostid;
+        //                 alert(search);
+        //                 $(search).children().remove();
+        //                 $.each(re, function (i, val) {
+        //                     var p = $("<p></p>").text(val.comment.content).addClass("mb-1");
+        //                     var h6 = $("<h6></h6>").text(val.user.username).addClass("mb-1");
+        //                     var div1 = $("<div></div>").addClass("d-flex flex-column align-items-start");
+        //                     var small = $("<small></small>").text(val.comment.createtime).addClass("text-muted");
+        //                     div1.append(h6);
+        //                     div1.append(p);
+        //                     div1.append(small);
+        //                     var div2 = $("<div></div>").addClass("list-group-item list-group-item-action flex-column");
+        //                     div2.append(div1);
+        //                     $(search).append(div2);
+        //                 });
+        //             }
+        //         });
+        //     });
+        // });
+    });
+</script>
+
+<!-- Submit comment -->
+<script>
+    function submitComment(postid, listId){
+        var textarea = "#feedback" + listId;
+        $.ajax({
+            url: "/comment/submitcomment",
+            data: {"postId": postid, "content": $(textarea).val()},
+            success: function (result) {
+                var re = result;
+                var search = "#commentList" + listId;
+                $(search).children().remove();
+                $.each(re, function (i, val) {
+                    var p = $("<p></p>").text(val.comment.content).addClass("mb-1");
+                    var h6 = $("<h6></h6>").text(val.user.username).addClass("mb-1");
+                    var div1 = $("<div></div>").addClass("d-flex flex-column align-items-start");
+                    var small = $("<small></small>").text(val.comment.createtime).addClass("text-muted");
+                    div1.append(h6);
+                    div1.append(p);
+                    div1.append(small);
+                    var div2 = $("<div></div>").addClass("list-group-item list-group-item-action flex-column");
+                    div2.append(div1);
+                    $(search).append(div2);
+                });
+                $(textarea).val("").focus();
+            }
+        });
+    }
+    // $(document).ready(function () {
+    //     $('button[name = submitComment]').each(function () {
+    //         $(this).click(function () {
+    //             var textarea = "#feedback" + $(this).val();
+    //             $.ajax({
+    //                 url: "/comment/submitcomment",
+    //                 data: {"postId":  $(this).val(), "content": $(textarea).val()},
+    //                 success: function (result) {
+    //                     var re = result;
+    //                     var search = "#commentList" + $(this).val();
+    //                     $(search).children().remove();
+    //                     alert(11);
+    //                     $.each(re, function (i, val) {
+    //                         alert(11);
+    //                         var p = $("<p></p>").text(val.comment.content).addClass("mb-1");
+    //                         var h6 = $("<h6></h6>").text(val.user.username).addClass("mb-1");
+    //                         var div1 = $("<div></div>").addClass("d-flex flex-column align-items-start");
+    //                         var small = $("<small></small>").text(val.comment.createtime).addClass("text-muted");
+    //                         div1.append(h6);
+    //                         div1.append(p);
+    //                         div1.append(small);
+    //                         var div2 = $("<div></div>").addClass("list-group-item list-group-item-action flex-column");
+    //                         div2.append(div1);
+    //                         $(search).append(div2);
+    //                         alert(11);
+    //                     });
+    //                     alert(11);
+    //                     $(textarea).val("").focus();
+    //                 }
+    //             });
+    //         });
+    //     })
+    // });
+
+</script>
 
 </body>
 

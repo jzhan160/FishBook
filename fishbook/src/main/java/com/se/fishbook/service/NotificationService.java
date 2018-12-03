@@ -11,4 +11,6 @@ public interface NotificationService {
     List<Notification> showReadNotifications(Integer UserId);
     void newLikes(Integer postId, Integer userId);
     void newComments (Integer postId, Integer userId);
+    void newFollow(Integer userId, Integer receiverId);
+    void newUnfollow(Integer userId, Integer receiverId);
 }
