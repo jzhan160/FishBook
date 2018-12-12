@@ -24,6 +24,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Integer removeLikesCountByOne(Integer id) {
+        Post p = postMapper.selectByPrimaryKey(id);
+        p.setLikecount(p.getLikecount() - 1);
+        int val = p.getLikecount();
+        postMapper.updateByPrimaryKey(p);
+        return val;
+    }
+
+    @Override
     public Integer insert(Post post) {
         return postMapper.insert(post);
     }
@@ -45,8 +54,7 @@ public class PostServiceImpl implements PostService {
     public List<Post> postsByUserIds(List<Integer> ids) {
         PostExample post = new PostExample();
         post.createCriteria().andAuthoridIn(ids);
-        post.setOrderByClause("PostId");
-
+        post.setOrderByClause("CreateTime");
         return postMapper.selectByExample(post);
     }
 
@@ -58,5 +66,8 @@ public class PostServiceImpl implements PostService {
         return postMapper.selectByExample(post);
     }
 
-
+    @Override
+    public Post selectByPostId(Integer id) {
+        return postMapper.selectByPrimaryKey(id);
+    }
 }

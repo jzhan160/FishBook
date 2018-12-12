@@ -25,6 +25,7 @@ public class NotificationServiceImpl implements NotificationService {
     public List<Notification> showUnreadNotifications(Integer UserId) {
         NotificationExample ne = new NotificationExample();
         ne.createCriteria().andReceiveridEqualTo(UserId).andViewedEqualTo(new Byte("0"));
+        ne.setOrderByClause("NotificationId DESC");
         return notificationMapper.selectByExample(ne);
     }
 
@@ -32,14 +33,16 @@ public class NotificationServiceImpl implements NotificationService {
     public List<Notification> showReadNotifications(Integer UserId) {
         NotificationExample ne = new NotificationExample();
         ne.createCriteria().andReceiveridEqualTo(UserId).andViewedEqualTo(new Byte("1"));
+        ne.setOrderByClause("NotificationId DESC");
         return notificationMapper.selectByExample(ne);
     }
 
     @Override
     public void newLikes(Integer postId, Integer userId) {
         Notification n = new Notification();
-        n.setEvent("Like");
+        n.setEvent("like " + postId);
         n.setTriggerid(userId);
+        n.setViewed(new Byte("0"));
         n.setReceiverid(postMapper.selectByPrimaryKey(postId).getAuthorid());
         notificationMapper.insert(n);
     }
@@ -47,9 +50,33 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void newComments(Integer postId, Integer userId) {
         Notification n = new Notification();
-        n.setEvent("Comment");
+        n.setEvent("comment " + postId);
         n.setTriggerid(userId);
         n.setReceiverid(postMapper.selectByPrimaryKey(postId).getAuthorid());
+        n.setViewed(new Byte("0"));
+        System.out.println(n.getEvent());
+        notificationMapper.insert(n);
+    }
+
+    @Override
+    public void newFollow(Integer userId, Integer receiverId) {
+        Notification n = new Notification();
+        n.setEvent("follow");
+        n.setTriggerid(userId);
+        n.setReceiverid(receiverId);
+        n.setViewed(new Byte("0"));
+        System.out.println(n.getEvent());
+        notificationMapper.insert(n);
+    }
+
+    @Override
+    public void newUnfollow(Integer userId, Integer receiverId) {
+        Notification n = new Notification();
+        n.setEvent("unfollow");
+        n.setTriggerid(userId);
+        n.setReceiverid(receiverId);
+        n.setViewed(new Byte("0"));
+        System.out.println(n.getEvent());
         notificationMapper.insert(n);
     }
 }

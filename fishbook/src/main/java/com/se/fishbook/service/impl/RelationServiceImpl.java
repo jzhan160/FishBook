@@ -48,6 +48,10 @@ public class RelationServiceImpl implements RelationService {
     }
 
     public void addRelationship(Integer followerid, Integer followeeid){
+        UserRelationship ur = new UserRelationship();
+        ur.setFolloweeid(followeeid);
+        ur.setFollowerid(followerid);
+        relationshipMapper.insert(ur);
         
     }
 }

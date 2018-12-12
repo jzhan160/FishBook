@@ -1,12 +1,12 @@
 package com.se.fishbook.controller;
 
-import com.se.fishbook.model.Comment;
-import com.se.fishbook.model.CommentDisplay;
-import com.se.fishbook.model.User;
-import com.se.fishbook.model.UserKey;
+import com.se.fishbook.model.*;
 import com.se.fishbook.service.CommentService;
+import com.se.fishbook.service.NotificationService;
+import com.se.fishbook.service.PostService;
 import com.se.fishbook.service.UserService;
 import com.se.fishbook.util.Constants;
+import com.se.fishbook.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +26,12 @@ public class CommentController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PostService postService;
+
+    @Autowired
+    private NotificationService notificationService;
+
     //direct to the page where you can start a new comment
     @RequestMapping("")
     public String comment(){
@@ -33,18 +39,24 @@ public class CommentController {
     }
 
     //submit your new comment
-    @RequestMapping("/submit_comment")
-    public @ResponseBody List<CommentDisplay> submitComment(Comment comment, HttpServletRequest request){
+    @RequestMapping("/submitcomment")
+    public @ResponseBody List<CommentDisplay> submitComment(HttpServletRequest request){
         User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
-        comment.setAuthorid(user.getUserid());
-        //TODO: other arguments in comment?
-        commentService.addComment(comment);
-
-        //show all the comments
         Integer postId = Integer.valueOf(request.getParameter("postId"));
+        System.out.println("------add comment------------" + postId);
+        //TODO: add notification
+        String content = request.getParameter("content");
+        Comment comment = new Comment();
+        comment.setPostid(postId);
+        comment.setContent(content);
+        comment.setCreatetime(DateUtil.getTimestamp());
+        comment.setAuthorid(user.getUserid());
+        commentService.addComment(comment);
+        System.out.println("------add comment------------" + postId);
+        //show all the comments
         List<Comment> comments = commentService.selectCommentsByPostId(postId);
         List<CommentDisplay> cd = new ArrayList<>();
-        for(Comment c : comments){
+        for(Comment c : comments) {
             CommentDisplay cc = new CommentDisplay();
             cc.setComment(c);
             UserKey uk = new UserKey();
@@ -52,6 +64,8 @@ public class CommentController {
             cc.setUser(userService.selectById(uk));
             cd.add(cc);
         }
+        //if(postService.selectByPostId(postId).getAuthorid() != user.getUserid())
+        notificationService.newComments(postId, user.getUserid());
         return cd;
     }
 
@@ -60,7 +74,7 @@ public class CommentController {
         Integer postId = Integer.valueOf(request.getParameter("postId"));
         List<Comment> comments = commentService.selectCommentsByPostId(postId);
         List<CommentDisplay> cd = new ArrayList<>();
-        //System.out.println("------asdasdasdas--------------");
+        System.out.println("------asdasdasdas--------------" + postId);
         for(Comment c : comments){
             CommentDisplay cc = new CommentDisplay();
             cc.setComment(c);

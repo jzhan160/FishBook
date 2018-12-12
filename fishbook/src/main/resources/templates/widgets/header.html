@@ -33,7 +33,7 @@
         <div class="navbar-collapse collapse w-75 order-1 navbarNavDropdown mr-5">
             <ul class="navbar-nav ml-auto" th:if="${session.user}">
                 <li>
-                    <img class="rounded-circle img-thumbnail" src="https://placekitten.com/100/100" style="height:40px; width:40px;" >
+                    <img class="rounded-circle img-thumbnail" th:src=${session.user.imagepath} style="height:40px; width:40px;" >
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"

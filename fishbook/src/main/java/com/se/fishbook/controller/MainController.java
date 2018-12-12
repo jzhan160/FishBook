@@ -52,13 +52,7 @@ public class MainController {
             usersToShowPosts.add(user.getUserid());
             List<Post> posts = postService.postsByUserIds(usersToShowPosts);
 
-            System.out.println("==================Total Num:" + posts.size() + "===============");
-            Map<Integer, List<Comment>> comments = new HashMap<>();
-            int i = 0;
-            for (Post post : posts) {
-                comments.put(i, commentService.selectCommentsByPostId(post.getPostid()));
-                i++;
-            }
+
             List<PostDisplay> postDisplays = new ArrayList<>();
             for(Post post : posts){
                 PostDisplay pd = new PostDisplay();
@@ -67,6 +61,7 @@ public class MainController {
                 User author  = userService.selectById(key);
                 pd.setPost(post);
                 pd.setUser(author);
+                pd.setCommentCount(commentService.commentCountByPostId(post.getPostid()));
                 postDisplays.add(pd);
             }
             System.out.println("==================Total Num:"+ posts.size() +"===============");
