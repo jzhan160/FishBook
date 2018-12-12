@@ -170,6 +170,16 @@ public class MainController {
         return "/index";
     }
 
+
+    @RequestMapping(value = "test")
+    public  String test() {
+        return "test/testAjax";
+    }
+
+    @RequestMapping(value = "testResult", method = RequestMethod.POST)
+    public @ResponseBody String testResult() {
+        return "test";
+    }
     /*
      * session management, find password.....
      * */
