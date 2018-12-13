@@ -94,36 +94,7 @@ public class MainController {
         return result;
     }
 
-   /* @RequestMapping(value = "login",method = RequestMethod.POST)
-    public @ResponseBody  Result login(User user, HttpServletRequest request) {
-        System.out.println("==================in the login method");
-        System.out.println("==================user is"+user);
-        UserKey key = new UserKey();
-        key.setEmail(user.getEmail());
-        User user_checked = userService.selectByEmail(key);
-        System.out.println("user_checked is "+user_checked);
-
-        Result result = new Result();
-        if(user_checked!=null){
-            if(user_checked.getPassword().equals(user.getPassword())){
-                request.getSession().setAttribute(Constants.CURRENT_USER, user_checked);
-                //System.out.println("user is "+user);
-                // System.out.println("user_checked is "+user_checked);
-
-                result.setCode(Constants.SUCCESS);
-            }else{
-                result.setCode(Constants.ERROR);
-                result.setMsg("Incorrect Password!");
-            }
-        }else{
-            result.setCode(Constants.ERROR);
-            result.setMsg("Account does not exist!");
-        }
-        // System.out.println(result.getCode());
-        // System.out.println(result.getMsg());
-        return result;
-    }*/
-
+    //login method
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public @ResponseBody Result login(User user, Location location,HttpServletRequest request) {
         System.out.println("==================in the login method===============");
@@ -158,6 +129,7 @@ public class MainController {
         return  result;
     }
 
+    //register method
     @RequestMapping(value = "/sign_up",method = RequestMethod.POST)
     public String sign_up(User user,HttpServletRequest request) {
         user.setGender("Unknown");
@@ -170,12 +142,23 @@ public class MainController {
         return "/index";
     }
 
+    //logout and clear sessions
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request) {
         request.getSession().setAttribute(Constants.CURRENT_USER, null);
         return "/index";
     }
 
+
+    @RequestMapping(value = "test")
+    public  String test() {
+        return "test/testAjax";
+    }
+
+    @RequestMapping(value = "testResult", method = RequestMethod.POST)
+    public @ResponseBody String testResult() {
+        return "test";
+    }
     /*
      * session management, find password.....
      * */

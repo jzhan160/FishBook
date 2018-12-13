@@ -40,6 +40,11 @@ import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
+/*
+* The PostController class controls requests about posts such
+* as submission, deletion, marking and unmarking
+* */
+
 @Controller
 public class PostController {
 
@@ -49,17 +54,16 @@ public class PostController {
     @Autowired
     private NotificationService notificationService;
 
-//    @Value("${web.upload.path}")
-//    private String uploadPath = "D:/GitHub/FishBook/fishbook/src/main/resources/static/image/post/";
-
+    @Value("${web.upload.path}")
+    private String uploadPath;
 
     //submit your new post
     @RequestMapping(value="/submit_post")
     public String submitPost(@RequestParam("fishing_pic")MultipartFile[] files, @RequestParam String content, HttpServletRequest request) {
         Result result = new Result();
         User user = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
-        System.out.println("path:"+request.getServletContext().getContextPath());
-        String uploadPath = request.getServletContext().getRealPath("/")+"post/";
+      /*  System.out.println("path:"+request.getServletContext().getContextPath());
+        String uploadPath = request.getServletContext().getRealPath("/")+"post/";*/
         String path = "";
         String savedPath = "";
         try {
@@ -75,7 +79,8 @@ public class PostController {
                                        DateUtil.date2Str(new Date())+ "_"+ UUID.randomUUID().toString()+
                                        FileUtil.getFileType(fileName);
 
-                        path = uploadPath+name;
+                        path = uploadPath+"post/"+name;
+                        System.out.println(path);
                         savedPath = "post/"+name;
                         File outFile = new File(path);
                         FileUtils.copyInputStreamToFile(files[0].getInputStream(), outFile);
@@ -95,7 +100,7 @@ public class PostController {
             Post post = new Post();
             post.setContent(content);
             post.setCreatetime(DateUtil.getTimestamp());
-            post.setImagepath(savedPath);
+            post.setImagepath(path);
             post.setAuthorid(user.getUserid());
             Location location = (Location) request.getSession().getAttribute(Constants.CURRENT_LOCATION);
             post.setLocationlatitude(location.getLat());
@@ -112,8 +117,7 @@ public class PostController {
         return "redirect:/index";
     }
 
-
-
+    //mark a post as your favorite
     @RequestMapping("/addLikes")
     @ResponseBody
     public Integer addLikes(HttpServletRequest request){
@@ -125,6 +129,7 @@ public class PostController {
         return val;
     }
 
+    //remove marked posts
     @RequestMapping("/removeLikes")
     @ResponseBody
     public Integer removeLikes(HttpServletRequest request){

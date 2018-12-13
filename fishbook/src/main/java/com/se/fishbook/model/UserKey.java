@@ -1,5 +1,6 @@
 package com.se.fishbook.model;
 
+//primary key of user table
 public class UserKey {
     private Integer userid;
 

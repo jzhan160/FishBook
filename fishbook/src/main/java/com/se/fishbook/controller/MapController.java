@@ -8,6 +8,8 @@
  * which is responsible for the front end request from the
  * map page.
  *
+ * MapController class deal with requests in the map page such as
+ * get current location and all posts in the map.
  * */
 package com.se.fishbook.controller;
 

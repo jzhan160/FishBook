@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+//java bean for selecting comments by user-defined conditions
 public class CommentExample {
     protected String orderByClause;
 

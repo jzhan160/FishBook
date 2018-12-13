@@ -5,6 +5,7 @@ import com.se.fishbook.model.Post;
 import com.se.fishbook.model.User;
 
 import java.util.List;
+//NotificationService is used to operate notification table for the business layer
 
 public interface NotificationService {
     List<Notification> showUnreadNotifications(Integer UserId);

@@ -1,6 +1,7 @@
 package com.se.fishbook.util;
 /**
- *
+ *The Result class contains response code and message as
+ * a response body for ajax
  *
  */
 public class Result {

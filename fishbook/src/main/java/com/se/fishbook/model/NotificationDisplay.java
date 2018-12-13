@@ -1,7 +1,7 @@
 package com.se.fishbook.model;
 
 import java.util.List;
-
+//encapsulating class to show notifications
 public class NotificationDisplay {
     private List<CommentDisplay> comments;
     private Post post;

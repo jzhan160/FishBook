@@ -4,6 +4,7 @@ import com.se.fishbook.model.Notification;
 import com.se.fishbook.model.NotificationExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+//operations on the notification table
 
 public interface NotificationMapper {
     int countByExample(NotificationExample example);

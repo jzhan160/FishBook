@@ -2,6 +2,7 @@ package com.se.fishbook.model;
 
 import java.util.ArrayList;
 import java.util.List;
+//java bean for selecting notifications by user-defined conditions
 
 public class NotificationExample {
     protected String orderByClause;

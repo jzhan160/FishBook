@@ -1,6 +1,6 @@
 package com.se.fishbook.interceptor;
 
-
+//deal with static resources
 /*
 @Configuration
 public class WebAppConfigurer extends WebMvcConfigurerAdapter {

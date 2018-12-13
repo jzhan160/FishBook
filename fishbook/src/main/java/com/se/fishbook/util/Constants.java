@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * constant
+ * constant values
  */
 public class Constants {
      public static Map<String,String> mapOptions = new HashMap<String,String>();

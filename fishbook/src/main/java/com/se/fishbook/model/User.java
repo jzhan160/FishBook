@@ -3,6 +3,7 @@ package com.se.fishbook.model;
 import com.se.fishbook.util.DateUtil;
 
 import java.util.Date;
+//java bean for the user table
 
 public class User extends UserKey {
     private String username;

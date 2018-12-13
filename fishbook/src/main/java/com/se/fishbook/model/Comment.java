@@ -1,7 +1,7 @@
 package com.se.fishbook.model;
 
 import java.util.Date;
-
+//java bean for comment table
 public class Comment {
     private Integer commentid;
 

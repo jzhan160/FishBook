@@ -5,6 +5,7 @@ import com.se.fishbook.model.UserExample;
 import com.se.fishbook.model.UserKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+//operations on the user table
 
 public interface UserMapper {
     int countByExample(UserExample example);

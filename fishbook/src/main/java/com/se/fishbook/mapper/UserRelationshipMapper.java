@@ -4,6 +4,7 @@ import com.se.fishbook.model.UserRelationship;
 import com.se.fishbook.model.UserRelationshipExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+//operations on the relationship table
 
 public interface UserRelationshipMapper {
     int countByExample(UserRelationshipExample example);

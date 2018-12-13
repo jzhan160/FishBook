@@ -6,12 +6,12 @@
     </script>
     <script>
         $(document).ready(function(){
-            $("button").click(function(){
-                $.ajax({url:"/test/Ajax/test",
+            $("#button").click(function(){
+                $.ajax({url:"/testResult",
                     data: {"id" : 1},
+                    type:"post",
                     success:function(result){
-                        var re = result;
-                        $("#div1").html(re.lat);
+                        $("#div1").html(result);
                     }});
             });
         });
@@ -20,7 +20,7 @@
 <body>
 
 <div id="div1"><h2>comment1</h2></div>
-<button>comments</button>
+<button id="button">comments</button>
 
 </body>
 </html>

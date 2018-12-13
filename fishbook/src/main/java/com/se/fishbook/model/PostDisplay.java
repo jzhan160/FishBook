@@ -1,6 +1,7 @@
 package com.se.fishbook.model;
 
 import java.util.List;
+//the encapsulating class to show posts on the page
 
 public class PostDisplay {
     private Post post;

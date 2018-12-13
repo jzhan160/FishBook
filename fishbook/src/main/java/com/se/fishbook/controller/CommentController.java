@@ -27,6 +27,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+* CommentController class is the controller that manages requests about user comments, including
+* committing a new comment and seeing other comments;
+*
+*
+* */
+
 @Controller
 @RequestMapping("/comment")
 public class CommentController {

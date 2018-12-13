@@ -4,7 +4,7 @@ import com.se.fishbook.model.Comment;
 import com.se.fishbook.model.CommentExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-
+//operations on the comment table
 public interface CommentMapper {
     int countByExample(CommentExample example);
 
