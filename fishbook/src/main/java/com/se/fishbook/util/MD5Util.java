@@ -6,7 +6,7 @@ import java.security.MessageDigest;
  */
 public class MD5Util {
 
-	// MD5加码。32位
+	// MD5 encoding 32-bit
 	public static String MD5(String inStr) {
 		MessageDigest md5 = null;
 		try {
@@ -47,7 +47,7 @@ public class MD5Util {
 		return s;
 	}
 
-	// 加密后解密
+	// decoding
 	public static String JM(String inStr) {
 		char[] a = inStr.toCharArray();
 		for (int i = 0; i < a.length; i++) {
