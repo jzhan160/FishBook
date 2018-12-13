@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 
 import java.util.List;
 
+//PostService is used to operate post table for the business layer
 public interface PostService {
     List<Post> selectAll();
 

@@ -4,6 +4,7 @@ import com.se.fishbook.model.Post;
 import com.se.fishbook.model.PostExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+//operations on the post table
 
 public interface PostMapper {
     int countByExample(PostExample example);

@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+//this is the initiating class for SpringBoot Application
 @SpringBootApplication
 @MapperScan("com.se.fishbook.mapper")
 @ComponentScan("com.se.fishbook.*")

@@ -1,4 +1,5 @@
 package com.se.fishbook.model;
+//java bean for the userRelationship table
 
 public class UserRelationship {
     private Integer relationshipid;

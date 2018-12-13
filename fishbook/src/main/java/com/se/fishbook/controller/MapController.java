@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 /*
-* MapController
+* MapController class deal with requests in the map page such as
+* get current location and all posts in the map.
 * */
 
 @Controller

@@ -1,5 +1,6 @@
 package com.se.fishbook.test;
 
+//the location class is used to test location information getting by Google Map API
 public class Location {
     private double lat;
     private double lng;

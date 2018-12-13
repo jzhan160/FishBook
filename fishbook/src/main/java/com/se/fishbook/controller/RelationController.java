@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+* RelationController will manage requests about following and unfollowing
+* other users as well as looking through your followers and followings
+*
+* */
+
 @Controller
 @RequestMapping("/relation")
 public class RelationController {

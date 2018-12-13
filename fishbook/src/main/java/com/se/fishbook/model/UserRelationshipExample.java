@@ -2,6 +2,7 @@ package com.se.fishbook.model;
 
 import java.util.ArrayList;
 import java.util.List;
+//java bean for selecting followers and followings  by user-defined conditions
 
 public class UserRelationshipExample {
     protected String orderByClause;

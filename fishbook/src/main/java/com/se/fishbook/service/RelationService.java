@@ -3,6 +3,7 @@ package com.se.fishbook.service;
 import com.se.fishbook.model.User;
 
 import java.util.List;
+//RelationService is used to operate relationship table for the business layer
 
 public interface RelationService {
     //select followers of this user

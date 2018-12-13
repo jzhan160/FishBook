@@ -1,4 +1,5 @@
 package com.se.fishbook.model;
+//java bean for notification table
 
 public class Notification {
     private Integer notificationid;

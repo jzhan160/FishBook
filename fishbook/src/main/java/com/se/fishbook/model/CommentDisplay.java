@@ -1,5 +1,6 @@
 package com.se.fishbook.model;
 
+//the encapsulating class to show comments on the page
 public class CommentDisplay {
     private Comment comment;
     private User user;

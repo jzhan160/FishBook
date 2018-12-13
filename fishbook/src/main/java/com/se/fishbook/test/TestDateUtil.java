@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Date;
 
+//Test DateUtil class
 public class TestDateUtil {
     @Test
     public void test(){

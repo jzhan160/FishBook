@@ -29,6 +29,11 @@ import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
+/*
+* The PostController class controls requests about posts such
+* as submission, deletion, marking and unmarking
+* */
+
 @Controller
 public class PostController {
 
@@ -40,7 +45,6 @@ public class PostController {
 
     @Value("${web.upload.path}")
     private String uploadPath;
-
 
     //submit your new post
     @RequestMapping(value="/submit_post")
@@ -102,8 +106,7 @@ public class PostController {
         return "redirect:/index";
     }
 
-
-
+    //mark a post as your favorite
     @RequestMapping("/addLikes")
     @ResponseBody
     public Integer addLikes(HttpServletRequest request){
@@ -115,6 +118,7 @@ public class PostController {
         return val;
     }
 
+    //remove marked posts
     @RequestMapping("/removeLikes")
     @ResponseBody
     public Integer removeLikes(HttpServletRequest request){

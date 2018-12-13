@@ -4,6 +4,10 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+/*
+* Spring MVC adapter that set the start page as index.html
+*
+* */
 @Configuration
 public class MyAdapter extends WebMvcConfigurerAdapter {
     @Override

@@ -3,6 +3,7 @@ package com.se.fishbook.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+//java bean for selecting users information by user-defined conditions
 
 public class UserExample {
     protected String orderByClause;

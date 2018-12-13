@@ -27,7 +27,11 @@ import java.io.IOException;
 import java.util.*;
 
 /*
-* AccountController class handles requests about user accounts
+* AccountController class handles requests about user accounts including:
+* see profile page, edit personal information and password, upload personal
+* image, look through and delete previous posts, and load notifications.
+*
+*
 * */
 @Controller
 @RequestMapping("/account")
@@ -70,6 +74,7 @@ public class AccountController {
         return mv;
     }
 
+    //delete previous posts
     @RequestMapping("/deletePost/{postid}")
     private String deletePost(@PathVariable String postid,HttpServletRequest request){
         System.out.println("Delete.....");
