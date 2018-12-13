@@ -14,7 +14,7 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentMapper commentMapper;
-
+    /*select comment by post id*/
     @Override
     public List<Comment> selectCommentsByPostId(Integer postId) {
         CommentExample ce = new CommentExample();
@@ -22,14 +22,14 @@ public class CommentServiceImpl implements CommentService {
         ce.setOrderByClause("CreateTime DESC");
         return commentMapper.selectByExample(ce);
     }
-
+    /*comment count by post id*/
     @Override
     public Integer commentCountByPostId(Integer postId) {
         CommentExample ce = new CommentExample();
         ce.createCriteria().andPostidEqualTo(postId);
         return commentMapper.selectByExample(ce).size();
     }
-
+    /*add comment*/
     @Override
     public void addComment(Comment comment) {
         commentMapper.insert(comment);

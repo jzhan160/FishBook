@@ -29,7 +29,7 @@ public class RelationServiceImpl implements RelationService {
 
         return followeeId;
     }
-
+    /*return all followers*/
     @Override
     public List<Integer> allFollowers(User user){
         List<UserRelationship> userRelationships = relationshipMapper.selectByFolloweeId(user.getUserid());
@@ -40,13 +40,13 @@ public class RelationServiceImpl implements RelationService {
 
         return followerId;
     }
-
+    /*remove the relationship*/
     public void deleteRelationship(Integer followerid,Integer followeeid){
         UserRelationshipExample re=new UserRelationshipExample();
         re.createCriteria().andFolloweeidEqualTo(followeeid).andFolloweridEqualTo(followerid);
         relationshipMapper.deleteByExample(re);
     }
-
+    /*add relationship*/
     public void addRelationship(Integer followerid, Integer followeeid){
         UserRelationship ur = new UserRelationship();
         ur.setFolloweeid(followeeid);

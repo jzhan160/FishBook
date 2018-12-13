@@ -20,7 +20,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Resource
     private PostMapper postMapper;
-
+    /*show unread notifications*/
     @Override
     public List<Notification> showUnreadNotifications(Integer UserId) {
         NotificationExample ne = new NotificationExample();
@@ -28,7 +28,7 @@ public class NotificationServiceImpl implements NotificationService {
         ne.setOrderByClause("NotificationId DESC");
         return notificationMapper.selectByExample(ne);
     }
-
+    /*show notifications that are readed*/
     @Override
     public List<Notification> showReadNotifications(Integer UserId) {
         NotificationExample ne = new NotificationExample();
@@ -46,7 +46,7 @@ public class NotificationServiceImpl implements NotificationService {
         n.setReceiverid(postMapper.selectByPrimaryKey(postId).getAuthorid());
         notificationMapper.insert(n);
     }
-
+    /*new comments*/
     @Override
     public void newComments(Integer postId, Integer userId) {
         Notification n = new Notification();
@@ -57,7 +57,7 @@ public class NotificationServiceImpl implements NotificationService {
         System.out.println(n.getEvent());
         notificationMapper.insert(n);
     }
-
+    /*new follow*/
     @Override
     public void newFollow(Integer userId, Integer receiverId) {
         Notification n = new Notification();
@@ -68,7 +68,7 @@ public class NotificationServiceImpl implements NotificationService {
         System.out.println(n.getEvent());
         notificationMapper.insert(n);
     }
-
+    /*new unfollow*/
     @Override
     public void newUnfollow(Integer userId, Integer receiverId) {
         Notification n = new Notification();
