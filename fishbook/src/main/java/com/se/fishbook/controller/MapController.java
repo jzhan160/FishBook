@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////
+// MapController.java  response to web requests            //
+// ver 1.0                                                  //
+//                                                          //
+//////////////////////////////////////////////////////////////
+/*
+ * This package provides one Java class MapController
+ * which is responsible for the front end request from the
+ * map page.
+ *
+ * */
 package com.se.fishbook.controller;
 
  import com.se.fishbook.model.Post;
@@ -13,9 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-/*
-* MapController
-* */
 
 @Controller
 @RequestMapping("/map")

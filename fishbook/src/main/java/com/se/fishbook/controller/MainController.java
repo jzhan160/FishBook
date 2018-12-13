@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////
+// MainController.java  response to web requests            //
+// ver 1.0                                                  //
+//                                                          //
+//////////////////////////////////////////////////////////////
+/*
+ * This package provides one Java class MainController
+ * which is responsible for the front end request from the
+ * main page.
+ *
+ * */
 package com.se.fishbook.controller;
 
 import com.se.fishbook.model.*;

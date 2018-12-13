@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////
+// SettingController.java  response to web requests         //
+// ver 1.0                                                  //
+//                                                          //
+//////////////////////////////////////////////////////////////
+/*
+ * This package provides one Java class SettingController
+ * which is responsible for the front end request from the
+ * setting page.
+ *
+ * */
 package com.se.fishbook.controller;
 
 

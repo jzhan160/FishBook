@@ -1,3 +1,15 @@
+//////////////////////////////////////////////////////////////
+// AccountController.java  response to web requests         //
+// ver 1.0                                                  //
+//                                                          //
+//////////////////////////////////////////////////////////////
+/*
+ * This package provides one Java class AccountController
+ * which is responsible for the account related front end
+ * request.
+ *
+ * */
+
 package com.se.fishbook.controller;
 import com.se.fishbook.model.*;
 import com.se.fishbook.service.CommentService;

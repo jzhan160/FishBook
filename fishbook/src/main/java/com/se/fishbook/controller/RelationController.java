@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////
+// RelationController.java  response to web requests            //
+// ver 1.0                                                  //
+//                                                          //
+//////////////////////////////////////////////////////////////
+/*
+ * This package provides one Java class RelationController
+ * which is responsible for the operations related to manage
+ * user relationship.
+ *
+ * */
 package com.se.fishbook.controller;
 
 import com.se.fishbook.model.User;
